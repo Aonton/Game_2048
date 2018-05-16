@@ -76,3 +76,18 @@ void GameBoard::setPiece(int val, int row, int col)
 {
   board_nums[row][col] = val;
 }
+
+int GameBoard::getRowSize()
+{
+  return ROW_NUM;
+}
+
+int GameBoard::getColSize()
+{
+  return COL_NUM;
+}
+
+int GameBoard::getPiece(int row, int col)
+{
+  return board_nums[row][col];
+}

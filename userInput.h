@@ -19,11 +19,10 @@ class UserInput
 
     void DisplayTopMenu();
     void DisplayBottomMenu();
-    void Input();
+    bool Input();
     int getch(void);
 
   private:
-    int choose;
     const static int KEY_UP = 65;
     const static int KEY_DOWN = 66;
     const static int KEY_LEFT = 68;

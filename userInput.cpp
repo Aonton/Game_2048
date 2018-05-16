@@ -10,7 +10,7 @@ using namespace std;
 
 UserInput::UserInput()
 {
-  UserInput::choose = 0;
+  // EMPTY
 }
 
 void UserInput::DisplayTopMenu()
@@ -35,7 +35,7 @@ void UserInput::DisplayBottomMenu()
   cout<< endl;
 }
 
-void UserInput::Input()
+bool UserInput::Input()
 {
   int input = 0;
   //while(true)
@@ -62,10 +62,12 @@ void UserInput::Input()
           cout<< "GAME OVER" << endl;
           exit(1);
       default:
-          // not arrow
+          return false;
           break;
       }
     }
+
+    return true;
 }
 
 int UserInput::getch(void)

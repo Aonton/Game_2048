@@ -14,6 +14,9 @@ class GameBoard
 
     void PrintBoard();
     void setPiece(int,int,int);
+    int getRowSize();
+    int getColSize();
+    int getPiece(int,int);
 
   private:
     void PrintBar();
