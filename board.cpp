@@ -8,7 +8,7 @@
 #include "board.h"
 using namespace std;
 
-GameBoard::GameBoard()
+GameBoard::GameBoard(int offset, int barsPerCol)
 {
   for(int row=0; row<GameBoard::ROW_NUM; row++)
   {
@@ -17,19 +17,62 @@ GameBoard::GameBoard()
       board_nums[row][col] = 0;
     }
   }
+
+  GameBoard::offset = offset;
+  GameBoard::barsPerCol = barsPerCol;
+}
+
+void GameBoard::PrintOffset()
+{
+  for(int i=0; i<GameBoard::offset; i++)
+  {
+    cout<< " ";
+  }
+}
+
+void GameBoard::PrintBar()
+{
+  for(int i=0; i<=GameBoard::barsPerCol*COL_NUM; i++)
+  {
+    cout<< "-";
+  }
 }
 
 void GameBoard::PrintBoard()
 {
+
+  PrintOffset();
+  PrintBar();
+  cout << endl;
+
   for(int row=0; row<GameBoard::ROW_NUM; row++)
   {
+    PrintOffset();
+    cout<< "| ";
     for(int col=0; col<GameBoard::COL_NUM; col++)
     {
-        cout<< board_nums[row][col] << " ";
+        if(board_nums[row][col] == 0)
+        {
+          cout<< " ";
+        }
+        else
+        {
+          cout<< board_nums[row][col];
+        }
+        cout<< " | ";
     }
 
+    PrintOffset();
+    cout<< endl;
+    PrintOffset();
+    PrintBar();
     cout<< endl;
   }
 
   cout<< endl;
+}
+
+void GameBoard::setPiece(int val, int row, int col)
+{
+  board_nums[row][col] = val;
 }
