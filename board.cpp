@@ -179,3 +179,45 @@ bool GameBoard::calFull()
     return true;
   }
 }
+
+bool GameBoard::calEmpty()
+{
+
+  for(int row=0; row<GameBoard::ROW_NUM; row++)
+  {
+    for(int col=0; col<GameBoard::COL_NUM; col++)
+    {
+      if(board_nums[row][col] != 0)
+      {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+
+bool GameBoard::operator == (GameBoard& compareBoard)
+{
+  if(this->getRowSize() == compareBoard.getRowSize() &&
+     this->getColSize() == compareBoard.getColSize())
+  {
+      for(int i=0; i<this->getRowSize(); i++)
+      {
+        for(int j=0; j<this->getColSize(); j++)
+        {
+          if(this->board_nums[i][j]!=compareBoard.board_nums[i][j])
+          {
+            return false;
+          }
+        }
+      }
+  }
+  else
+  {
+    return false;
+  }
+
+  return true;
+}

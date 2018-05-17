@@ -22,15 +22,15 @@ class Collision
   public:
     Collision(GameBoard&);
 
-    void shiftAll(int);
+    bool shiftAll(int);
 
   private:
-    void NewPosition(struct Position, int);
+    bool NewPosition(struct Position, int);
 
-    void shiftUp(int);
-    void shiftDown(int);
-    void shiftLeft(int);
-    void shiftRight(int);
+    bool shiftUp(int);
+    bool shiftDown(int);
+    bool shiftLeft(int);
+    bool shiftRight(int);
 
     GameBoard* board;
 

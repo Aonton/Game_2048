@@ -18,6 +18,9 @@ class GameBoard
     int getColSize();
     int getPiece(int,int);
     bool calFull();
+    bool calEmpty();
+
+    bool operator == (GameBoard&);
 
   private:
     void PrintBar();

@@ -16,11 +16,12 @@ Collision::Collision(GameBoard& board)
   Collision::board = &board;
 }
 
-void Collision::NewPosition(struct Position pos, int key)
+bool Collision::NewPosition(struct Position pos, int key)
 {
   struct Position future_pos = pos;
   list<int> combineMarker;
   int temp_maker;
+  bool collision = false;
 
   if(board->getPiece(pos.row,pos.col)!=0)
   {
@@ -73,6 +74,7 @@ void Collision::NewPosition(struct Position pos, int key)
                           );
           // black list row/col that were already merged
           combineMarker.push_back(temp_maker);
+          collision = true;
       }
       else if(board->getPiece(future_pos.row,future_pos.col) == 0)
       {
@@ -84,84 +86,106 @@ void Collision::NewPosition(struct Position pos, int key)
                           pos.row,
                           pos.col
                          );
+          collision = true;
       }
+      else
+      {
+        // No Collision
+      }
+
       pos = future_pos;
     }
   }
+
+  return collision;
 }
 
-void Collision::shiftUp(int key)
+bool Collision::shiftUp(int key)
 {
   struct Position pos;
+  bool collision = false;
 
   for(pos.row=0; pos.row<board->getRowSize(); pos.row++)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      NewPosition(pos, key);
+      collision = collision || NewPosition(pos, key);
     }
   }
+
+  return collision;
 }
 
-void Collision::shiftDown(int key)
+bool Collision::shiftDown(int key)
 {
   struct Position pos;
+  bool collision = false;
 
   for(pos.row=board->getRowSize(); pos.row>=0; pos.row--)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      NewPosition(pos, key);
+      collision = collision || NewPosition(pos, key);
     }
   }
+
+  return collision;
 }
 
-void Collision::shiftRight(int key)
+bool Collision::shiftRight(int key)
 {
   struct Position pos;
+  bool collision = false;
 
   for(pos.col=board->getColSize(); pos.col>=0; pos.col++)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      NewPosition(pos, key);
+      collision = collision || NewPosition(pos, key);
     }
   }
+
+  return collision;
 }
 
-void Collision::shiftLeft(int key)
+bool Collision::shiftLeft(int key)
 {
   struct Position pos;
+  bool collision = false;
 
   for(pos.col=0; pos.col<board->getRowSize(); pos.col++)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      NewPosition(pos, key);
+      collision = collision || NewPosition(pos, key);
     }
   }
+
+  return collision;
 }
 
-void Collision::shiftAll(int key)
+bool Collision::shiftAll(int key)
 {
+  bool collision = false;
 
   switch(key)
   {
     case KEY_UP:
-      shiftUp(key);
+      collision = shiftUp(key);
     break;
     case KEY_DOWN:
-      shiftDown(key);
+      collision = shiftDown(key);
     break;
     case KEY_LEFT:
-      shiftLeft(key);
+      collision = shiftLeft(key);
     break;
     case KEY_RIGHT:
-      shiftRight(key);
+      collision = shiftRight(key);
     break;
     default:
       // empty
     break;
   }
 
+  return collision;
 }

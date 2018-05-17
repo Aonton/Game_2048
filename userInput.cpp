@@ -22,19 +22,19 @@ int UserInput::Input()
 
       switch((input=getch())) {
       case KEY_UP:
-          cout << endl << "Up" << endl; //key up
+
           break;
       case KEY_DOWN:
-          cout << endl << "Down" << endl;   // key down
+
           break;
       case KEY_LEFT:
-          cout << endl << "Left" << endl;  // key left
+
           break;
       case KEY_RIGHT:
-          cout << endl << "Right" << endl;  // key right
+
           break;
       case REDO:
-          cout << "REDO" << endl;
+
           break;
       case EXIT:
           cout<< "GAME OVER" << endl;

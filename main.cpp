@@ -44,6 +44,7 @@ int main()
   PieceGen piece(pieces,board);
   Collision collDetec(board);
   Score score;
+  bool collision = false;
 
   int key = true;
   DisplayTopMenu();
@@ -56,14 +57,18 @@ int main()
 
     if(key)
     {
-      collDetec.shiftAll(key);
-      contGame = piece.setBoard();
-      // DO NOT CLEAR SCREEN FIX POSITION
-      // TO DO ADD COLOR
-      ClearScreen();
-      DisplayTopMenu();
-      board.PrintBoard();
-      DisplayBottomMenu(score.getScore());
+      collision = collDetec.shiftAll(key);
+
+      if(collision || board.calEmpty())
+      {
+        contGame = piece.setBoard();
+        // DO NOT CLEAR SCREEN FIX POSITION
+        // TO DO ADD COLOR
+        ClearScreen();
+        DisplayTopMenu();
+        board.PrintBoard();
+        DisplayBottomMenu(score.getScore());
+      }
     }
   }
 
