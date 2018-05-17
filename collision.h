@@ -22,10 +22,16 @@ class Collision
   public:
     Collision(GameBoard&);
 
-    void NewPosition(struct Position, int);
     void shiftAll(int);
 
   private:
+    void NewPosition(struct Position, int);
+
+    void shiftUp(int);
+    void shiftDown(int);
+    void shiftLeft(int);
+    void shiftRight(int);
+
     GameBoard* board;
 
 };

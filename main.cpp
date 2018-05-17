@@ -30,6 +30,7 @@ void ClearScreen();
 void DisplayTopMenu();
 void DisplayBottomMenu(int);
 
+// Only works for MAC OSX - TO DO: Make Windows Verison
 int main()
 {
 
@@ -38,7 +39,7 @@ int main()
   pieces.push_back(2);
   pieces.push_back(4);
   // min for max game is 6 for space
-  GameBoard board(2,6,2);
+  GameBoard board(9,6,2);
   UserInput input;
   PieceGen piece(pieces,board);
   Collision collDetec(board);
@@ -55,7 +56,6 @@ int main()
 
     if(key)
     {
-      cout<< key << endl;
       collDetec.shiftAll(key);
       contGame = piece.setBoard();
       // DO NOT CLEAR SCREEN FIX POSITION
@@ -77,11 +77,11 @@ void ClearScreen()
 
 void DisplayTopMenu()
 {
-  cout<< "**********************************************************************************" << endl;
-  cout<< "*            *           ****          *            *             *              *" << endl;
-  cout<< "*  REDO (R)  *  EXIT(E)  ****  UP (^)  *  DOWN (v)  *  LEFT (<-)  *  RIGHT (->)  *" << endl;
-  cout<< "*            *           ****          *            *             *              *" << endl;
-  cout<< "**********************************************************************************" << endl;
+  cout<< "*************************************************************************************************" << endl;
+  cout<< "*            *             *           *****          *            *             *              *" << endl;
+  cout<< "*  REDO (R)  *  RESET (S)  *  EXIT(E)  *****  UP (^)  *  DOWN (v)  *  LEFT (<-)  *  RIGHT (->)  *" << endl;
+  cout<< "*            *             *           *****          *            *             *              *" << endl;
+  cout<< "*************************************************************************************************" << endl;
   cout<< endl;
 
 }
@@ -94,9 +94,9 @@ void DisplayBottomMenu(int score)
   string str = to_string(score);
   int length = str.length();
 
-  cout<< "***********************************" << endl;
-  cout<< "*              SCORE              *" << endl;
-  cout<< "*                                 *" << endl;
+  cout<< "*************************************************************************************************" << endl;
+  cout<< "*              SCORE              *                                                             *" << endl;
+  cout<< "*                                 *                                                             *" << endl;
   cout<< "*";
 
   printf ("%*s%*c",
@@ -105,8 +105,8 @@ void DisplayBottomMenu(int score)
           ((space - length) >> 1) + ((space - length) & 1),
           ' '
         );
-  cout<< "*" << endl;
-  cout<< "*                                 *" << endl;
-  cout<< "***********************************" << endl;
+  cout<< "*                                                             *" << endl;
+  cout<< "*                                 *                                                             *" << endl;
+  cout<< "*************************************************************************************************" << endl;
   cout<< endl;
 }
