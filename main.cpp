@@ -58,6 +58,8 @@ int main()
       cout<< key << endl;
       collDetec.shiftAll(key);
       contGame = piece.setBoard();
+      // DO NOT CLEAR SCREEN FIX POSITION
+      // TO DO ADD COLOR
       ClearScreen();
       DisplayTopMenu();
       board.PrintBoard();
@@ -86,10 +88,24 @@ void DisplayTopMenu()
 
 void DisplayBottomMenu(int score)
 {
+  // TO DO MAKE FLEXEBLE
+  // TO DO CENTER TEXT FUNCTION
+  int space = 33;
+  string str = to_string(score);
+  int length = str.length();
+
   cout<< "***********************************" << endl;
   cout<< "*              SCORE              *" << endl;
   cout<< "*                                 *" << endl;
-  cout<< "*                " << score << "                *" << endl;
+  cout<< "*";
+
+  printf ("%*s%*c",
+          ((space - length) >> 1) + length,
+          str.c_str(),
+          ((space - length) >> 1) + ((space - length) & 1),
+          ' '
+        );
+  cout<< "*" << endl;
   cout<< "*                                 *" << endl;
   cout<< "***********************************" << endl;
   cout<< endl;

@@ -72,6 +72,8 @@ void GameBoard::PrintEmptyLine()
 void GameBoard::PrintBoard()
 {
 
+  string str;
+  int length = 0;
   PrintBar();
   PrintEmptyLine();
 
@@ -88,7 +90,15 @@ void GameBoard::PrintBoard()
         }
         else
         {
-          cout<< board_nums[row][col];
+          str = to_string(board_nums[row][col]);
+          length = str.length();
+
+          printf ("%*s%*c",
+                  ((GameBoard::spacesBtw - length) >> 1) + length,
+                  str.c_str(),
+                  ((GameBoard::spacesBtw - length) >> 1) + ((GameBoard::spacesBtw - length) & 1),
+                  ' '
+                );
         }
 
         PrintSpace();
