@@ -35,7 +35,7 @@ int PieceGen::GeneratePiece()
   }
 }
 
-PieceGen::Position PieceGen::GeneratePos()
+Position PieceGen::GeneratePos()
 {
     struct Position pos;
 

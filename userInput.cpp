@@ -35,7 +35,7 @@ void UserInput::DisplayBottomMenu()
   cout<< endl;
 }
 
-bool UserInput::Input()
+int UserInput::Input()
 {
   int input = 0;
   //while(true)
@@ -67,7 +67,7 @@ bool UserInput::Input()
       }
     }
 
-    return true;
+    return input;
 }
 
 int UserInput::getch(void)

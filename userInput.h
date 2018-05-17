@@ -12,6 +12,13 @@
 #include <stdio.h>
 using namespace std;
 
+#define KEY_UP 65
+#define KEY_DOWN 66
+#define KEY_LEFT 68
+#define KEY_RIGHT 67
+#define REDO 114
+#define EXIT 101
+
 class UserInput
 {
   public:
@@ -19,16 +26,11 @@ class UserInput
 
     void DisplayTopMenu();
     void DisplayBottomMenu();
-    bool Input();
+    int Input();
     int getch(void);
 
   private:
-    const static int KEY_UP = 65;
-    const static int KEY_DOWN = 66;
-    const static int KEY_LEFT = 68;
-    const static int KEY_RIGHT = 67;
-    const static int REDO = 114;
-    const static int EXIT = 101;
+
 };
 
 #endif

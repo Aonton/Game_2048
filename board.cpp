@@ -74,7 +74,14 @@ void GameBoard::PrintBoard()
 
 void GameBoard::setPiece(int val, int row, int col)
 {
-  board_nums[row][col] = val;
+  if(row<ROW_NUM &&
+     row>=0 &&
+     col<COL_NUM &&
+     col>=0)
+  {
+    board_nums[row][col] = val;
+  }
+
 }
 
 int GameBoard::getRowSize()
@@ -89,5 +96,12 @@ int GameBoard::getColSize()
 
 int GameBoard::getPiece(int row, int col)
 {
+  if(row>=ROW_NUM ||
+     row<0 ||
+     col>=COL_NUM ||
+     col<0)
+  {
+    return -1;
+  }
   return board_nums[row][col];
 }

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <list>
 #include "board.h"
+#include "position.cpp"
 using namespace std;
 
 class PieceGen
@@ -21,12 +22,6 @@ class PieceGen
 
   private:
       // TO DO: MAKE CONFIG FILE
-
-      struct Position
-      {
-        int row;
-        int col;
-      };
 
       int GeneratePiece();
       struct Position GeneratePos();
