@@ -24,8 +24,6 @@ class UserInput
   public:
     UserInput();
 
-    void DisplayTopMenu();
-    void DisplayBottomMenu();
     int Input();
     int getch(void);
 

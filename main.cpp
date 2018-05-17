@@ -9,8 +9,10 @@
 #include "userInput.h"
 #include "PieceGenerator.h"
 #include "collision.h"
+#include "score.h"
 using namespace std;
 
+// Sockets?
 // TO DO FIX THESE REPEATED VALUES
 #define KEY_UP 65
 #define KEY_DOWN 66
@@ -22,23 +24,32 @@ using namespace std;
 
 void ClearScreen();
 
+// TO DO PUT MAIN INTO GAME class or display class
+// add display centering
+
+void DisplayTopMenu();
+void DisplayBottomMenu(int);
+
 int main()
 {
 
+  int contGame = true;
   list<int> pieces;
   pieces.push_back(2);
   pieces.push_back(4);
-  GameBoard board(4,10);
+  // min for max game is 6 for space
+  GameBoard board(2,6,2);
   UserInput input;
   PieceGen piece(pieces,board);
   Collision collDetec(board);
+  Score score;
 
   int key = true;
-  input.DisplayTopMenu();
+  DisplayTopMenu();
   board.PrintBoard();
-  input.DisplayBottomMenu();
+  DisplayBottomMenu(score.getScore());
 
-  while(true)
+  while(contGame)
   {
     key = input.Input();
 
@@ -46,16 +57,40 @@ int main()
     {
       cout<< key << endl;
       collDetec.shiftAll(key);
-      piece.setBoard();
+      contGame = piece.setBoard();
       ClearScreen();
-      input.DisplayTopMenu();
+      DisplayTopMenu();
       board.PrintBoard();
-      input.DisplayBottomMenu();
+      DisplayBottomMenu(score.getScore());
     }
   }
+
+  cout<< "GAME OVER" << endl;
 }
 
 void ClearScreen()
 {
   cout << string( 100, '\n' );
+}
+
+void DisplayTopMenu()
+{
+  cout<< "**********************************************************************************" << endl;
+  cout<< "*            *           ****          *            *             *              *" << endl;
+  cout<< "*  REDO (R)  *  EXIT(E)  ****  UP (^)  *  DOWN (v)  *  LEFT (<-)  *  RIGHT (->)  *" << endl;
+  cout<< "*            *           ****          *            *             *              *" << endl;
+  cout<< "**********************************************************************************" << endl;
+  cout<< endl;
+
+}
+
+void DisplayBottomMenu(int score)
+{
+  cout<< "***********************************" << endl;
+  cout<< "*              SCORE              *" << endl;
+  cout<< "*                                 *" << endl;
+  cout<< "*                " << score << "                *" << endl;
+  cout<< "*                                 *" << endl;
+  cout<< "***********************************" << endl;
+  cout<< endl;
 }

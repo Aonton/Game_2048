@@ -18,7 +18,7 @@ class PieceGen
 {
   public:
       PieceGen(list<int>,GameBoard&);
-      void setBoard();
+      bool setBoard();
 
   private:
       // TO DO: MAKE CONFIG FILE

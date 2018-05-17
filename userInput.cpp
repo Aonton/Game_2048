@@ -13,28 +13,6 @@ UserInput::UserInput()
   // EMPTY
 }
 
-void UserInput::DisplayTopMenu()
-{
-  cout<< "*************************" << endl;
-  cout<< "*                       *" << endl;
-  cout<< "*  REDO (R)   EXIT(E)   *" << endl;
-  cout<< "*                       *" << endl;
-  cout<< "*************************" << endl;
-  cout<< endl;
-
-}
-
-void UserInput::DisplayBottomMenu()
-{
-  cout<< "*************************" << endl;
-  cout<< "*         UP (^)        *" << endl;
-  cout<< "*       BOTTON (v)      *" << endl;
-  cout<< "*        LEFT (<-)      *" << endl;
-  cout<< "*        RIGHT (->)     *" << endl;
-  cout<< "*************************" << endl;
-  cout<< endl;
-}
-
 int UserInput::Input()
 {
   int input = 0;

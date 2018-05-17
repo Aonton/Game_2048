@@ -45,16 +45,23 @@ Position PieceGen::GeneratePos()
     return pos;
 }
 
-void PieceGen::setBoard()
+bool PieceGen::setBoard()
 {
     int val = GeneratePiece();
     struct Position pos;
-    //int count = 0; maybe here?
 
-    // TO DO: Add end-game
-    do{
-      pos = GeneratePos();
-    }while(board->getPiece(pos.row,pos.col)!=0);
+    if(board->calFull())
+    {
+        return false;
+    }
+    else
+    {
+      do{
+        pos = GeneratePos();
+      }while(board->getPiece(pos.row,pos.col)!=0);
 
-    board->setPiece(val,pos.row,pos.col);
+      board->setPiece(val,pos.row,pos.col);
+    }
+
+    return true;
 }

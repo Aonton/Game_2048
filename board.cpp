@@ -4,11 +4,11 @@
    5/15/2018
 */
 
-#include<iostream>
+#include <iostream>
 #include "board.h"
 using namespace std;
 
-GameBoard::GameBoard(int offset, int barsPerCol)
+GameBoard::GameBoard(int offset, int spacesBtw, int emptyLineNum)
 {
   for(int row=0; row<GameBoard::ROW_NUM; row++)
   {
@@ -19,7 +19,8 @@ GameBoard::GameBoard(int offset, int barsPerCol)
   }
 
   GameBoard::offset = offset;
-  GameBoard::barsPerCol = barsPerCol;
+  GameBoard::spacesBtw = spacesBtw;
+  GameBoard::emptyLineNum = emptyLineNum;
 }
 
 void GameBoard::PrintOffset()
@@ -32,41 +33,79 @@ void GameBoard::PrintOffset()
 
 void GameBoard::PrintBar()
 {
-  for(int i=0; i<=GameBoard::barsPerCol*COL_NUM; i++)
+  PrintOffset();
+  for(int i=0; i<=(16 + ((GameBoard::spacesBtw-1)*12)); i++)
   {
     cout<< "-";
   }
+
+  cout<< endl;
+}
+
+void GameBoard::PrintSpace()
+{
+    for(int i=0; i<GameBoard::spacesBtw; i++)
+    {
+      cout<< " ";
+    }
+}
+
+void GameBoard::PrintEmptyLine()
+{
+  for(int i=0; i<GameBoard::emptyLineNum; i++)
+  {
+    PrintOffset();
+    cout<< "|";
+    for(int j=0; j<GameBoard::COL_NUM; j++)
+    {
+      PrintSpace();
+      PrintSpace();
+      PrintSpace();
+      cout<< "|";
+    }
+
+    cout<< endl;
+  }
+
 }
 
 void GameBoard::PrintBoard()
 {
 
-  PrintOffset();
   PrintBar();
-  cout << endl;
+  PrintEmptyLine();
 
   for(int row=0; row<GameBoard::ROW_NUM; row++)
   {
     PrintOffset();
-    cout<< "| ";
+    cout<< "|";
+    PrintSpace();
     for(int col=0; col<GameBoard::COL_NUM; col++)
     {
         if(board_nums[row][col] == 0)
         {
-          cout<< " ";
+          PrintSpace();
         }
         else
         {
           cout<< board_nums[row][col];
         }
-        cout<< " | ";
+
+        PrintSpace();
+        cout<< "|";
+        PrintSpace();
     }
 
     PrintOffset();
     cout<< endl;
-    PrintOffset();
+    PrintEmptyLine();
     PrintBar();
-    cout<< endl;
+
+    // TO DO: better logic
+    if(row+1<GameBoard::ROW_NUM)
+    {
+      PrintEmptyLine();
+    }
   }
 
   cout<< endl;
@@ -104,4 +143,29 @@ int GameBoard::getPiece(int row, int col)
     return -1;
   }
   return board_nums[row][col];
+}
+
+bool GameBoard::calFull()
+{
+  int filled_count = 0;
+
+  for(int row=0; row<GameBoard::ROW_NUM; row++)
+  {
+    for(int col=0; col<GameBoard::COL_NUM; col++)
+    {
+      if(board_nums[row][col] != 0)
+      {
+        filled_count++;
+      }
+    }
+  }
+
+  if(filled_count<(ROW_NUM*COL_NUM))
+  {
+    return false;
+  }
+  else
+  {
+    return true;
+  }
 }

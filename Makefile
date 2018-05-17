@@ -1,13 +1,14 @@
 # Makefile for Game_2048
 # Amy Feng
 # 5/16/2018
+# TO DO: CLEAN UP MAKEFILE
 
 CPP = g++
 CC = gcc
 CFLAGS = -c 
 
-game: main.o board.o userInput.o pieceGenerator.o collision.o position.o 
-	$(CPP) board.o main.o userInput.o pieceGenerator.o collision.o position.o -o game 
+game: main.o board.o userInput.o pieceGenerator.o collision.o position.o score.o
+	$(CPP) board.o main.o userInput.o pieceGenerator.o collision.o position.o score.o -o game 
 main.o: main.cpp
 	$(CPP) $(CFLAGS) main.cpp
 board.o: board.cpp
@@ -20,6 +21,8 @@ collision.o: collision.cpp
 	$(CPP) $(CFLAGS) collision.cpp
 position.o: position.cpp
 	$(CPP) $(CFLAGS) position.cpp
+score.o: score.cpp
+	$(CPP) $(CFLAGS) score.cpp
 clean: 
 	rm -rf *.o
 
