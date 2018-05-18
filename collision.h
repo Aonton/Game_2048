@@ -10,6 +10,7 @@
 #include <iostream>
 #include "board.h"
 #include "position.cpp"
+#include "score.h"
 using namespace std;
 
 #define KEY_UP 65
@@ -20,20 +21,21 @@ using namespace std;
 class Collision
 {
   public:
-    Collision(GameBoard&);
+    Collision(GameBoard&, Score&);
 
-    bool shiftAll(int);
-    bool testShift();
+    bool shiftAll(int, bool&);
+    bool testShift(bool&);
 
   private:
-    bool NewPosition(struct Position, int);
+    bool NewPosition(struct Position, int, bool&, bool);
 
-    bool shiftUp(int);
-    bool shiftDown(int);
-    bool shiftLeft(int);
-    bool shiftRight(int);
+    bool shiftUp(int, bool&, bool);
+    bool shiftDown(int, bool&, bool);
+    bool shiftLeft(int, bool&, bool);
+    bool shiftRight(int, bool&, bool);
 
     GameBoard* board;
+    Score* score;
 
 };
 

@@ -20,7 +20,7 @@ using namespace std;
 #define KEY_RIGHT 67
 #define REDO 114
 #define EXIT 101
-
+#define CONT 99
 
 void ClearScreen();
 
@@ -44,9 +44,13 @@ int main()
   GameBoard board(9,6,2);
   UserInput input;
   PieceGen piece(pieces,board);
-  Collision collDetec(board);
   Score score;
+  Collision collDetec(board,score);
   bool collision = false;
+  // remove later
+  bool fake = false;
+  bool found2048 = false;
+  bool Objective2048 = true;
 
   int key = true;
   DisplayTopMenu();
@@ -57,9 +61,9 @@ int main()
   {
     key = input.Input();
 
-    if(key)
+    if(key!=CONT && key)
     {
-      collision = collDetec.shiftAll(key);
+      collision = collDetec.shiftAll(key, found2048);
 
       if(collision || board.calEmpty())
       {
@@ -70,12 +74,34 @@ int main()
         DisplayTopMenu();
         board.PrintBoard();
         DisplayBottomMenu(score.getScore());
-        contGame=collDetec.testShift();
+
+        if(Objective2048)
+        {
+          contGame = (!found2048) && collDetec.testShift(fake);
+        }
+        else
+        {
+          contGame = collDetec.testShift(fake);
+        }
+
+        if(Objective2048 && found2048)
+        {
+          cout<< "YOU WIN" << endl;
+          // add timer for press?
+          cout<< "Press (SHIFT + C) to continue" << endl;
+          key = input.Input();
+          if(key==CONT)
+          {
+            contGame = true;
+            Objective2048 = false;
+          }
+        }
       }
     }
   }
 
   cout<< "GAME OVER" << endl;
+
 }
 
 void ClearScreen()

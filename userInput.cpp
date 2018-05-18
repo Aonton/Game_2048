@@ -38,6 +38,8 @@ int UserInput::Input()
       case EXIT:
           cout<< "GAME OVER" << endl;
           exit(1);
+      case CONT:
+        break;
       default:
           return false;
           break;

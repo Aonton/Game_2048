@@ -12,6 +12,7 @@ class Score
 {
   public:
     Score();
+    void addToScore(int);
     int getScore();
   private:
     int score;

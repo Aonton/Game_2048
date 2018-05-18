@@ -18,6 +18,7 @@ using namespace std;
 #define KEY_RIGHT 67
 #define REDO 114
 #define EXIT 101
+#define CONT 99
 
 class UserInput
 {

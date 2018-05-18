@@ -17,3 +17,11 @@ int Score::getScore()
 {
   return score;
 }
+
+void Score::addToScore(int points)
+{
+  if(points>0)
+  {
+    score+=points;
+  }
+}

@@ -11,12 +11,16 @@
 #include "collision.h"
 using namespace std;
 
-Collision::Collision(GameBoard& board)
+// TO DO NOT MAKE THIS GLOBAL
+#define END 2048
+
+Collision::Collision(GameBoard& board, Score& score)
 {
   Collision::board = &board;
+  Collision::score = &score;
 }
 
-bool Collision::NewPosition(struct Position pos, int key)
+bool Collision::NewPosition(struct Position pos, int key, bool& found2048, bool actualShift)
 {
   struct Position future_pos = pos;
   list<int> combineMarker;
@@ -63,6 +67,18 @@ bool Collision::NewPosition(struct Position pos, int key)
          board->getPiece(future_pos.row,future_pos.col)) &&
          it == combineMarker.end())
       {
+          if(board->getPiece(pos.row,pos.col) +
+             board->getPiece(future_pos.row,future_pos.col) == END)
+          {
+            found2048 = true;
+          }
+
+          if(actualShift)
+          {
+            score->addToScore(board->getPiece(pos.row,pos.col) +
+                              board->getPiece(future_pos.row,future_pos.col));
+          }
+
           board->setPiece(board->getPiece(pos.row,pos.col) +
                           board->getPiece(future_pos.row,future_pos.col),
                           future_pos.row,
@@ -96,7 +112,7 @@ bool Collision::NewPosition(struct Position pos, int key)
   return collision;
 }
 
-bool Collision::shiftUp(int key)
+bool Collision::shiftUp(int key, bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -105,14 +121,14 @@ bool Collision::shiftUp(int key)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      collision = NewPosition(pos, key) || collision;
+      collision = NewPosition(pos, key, found2048, actualShift) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftDown(int key)
+bool Collision::shiftDown(int key, bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -121,14 +137,14 @@ bool Collision::shiftDown(int key)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      collision = NewPosition(pos, key) || collision;
+      collision = NewPosition(pos, key, found2048, actualShift) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftRight(int key)
+bool Collision::shiftRight(int key, bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -137,14 +153,14 @@ bool Collision::shiftRight(int key)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      collision = NewPosition(pos, key) || collision;
+      collision = NewPosition(pos, key, found2048, actualShift) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftLeft(int key)
+bool Collision::shiftLeft(int key, bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -153,30 +169,30 @@ bool Collision::shiftLeft(int key)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      collision = NewPosition(pos, key) || collision;
+      collision = NewPosition(pos, key, found2048, actualShift) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftAll(int key)
+bool Collision::shiftAll(int key, bool& found2048)
 {
   bool collision = false;
 
   switch(key)
   {
     case KEY_UP:
-      collision = shiftUp(key);
+      collision = shiftUp(key, found2048);
     break;
     case KEY_DOWN:
-      collision = shiftDown(key);
+      collision = shiftDown(key, found2048);
     break;
     case KEY_LEFT:
-      collision = shiftLeft(key);
+      collision = shiftLeft(key, found2048);
     break;
     case KEY_RIGHT:
-      collision = shiftRight(key);
+      collision = shiftRight(key, found2048);
     break;
     default:
       // empty
@@ -186,21 +202,22 @@ bool Collision::shiftAll(int key)
   return collision;
 }
 
-bool Collision::testShift()
+// DON"T WANT TEST SHIFT TO HAVE FOUND 2048
+bool Collision::testShift(bool& found2048)
 {
   GameBoard temp(*board);
 
   // TO DO: fix the double design later
-  if(!shiftUp(KEY_UP))
+  if(!shiftUp(KEY_UP, found2048, false))
   {
     *board = temp;
-    if(!shiftDown(KEY_DOWN))
+    if(!shiftDown(KEY_DOWN, found2048, false))
     {
       *board = temp;
-      if(!shiftLeft(KEY_LEFT))
+      if(!shiftLeft(KEY_LEFT, found2048, false))
       {
         *board = temp;
-        if(!shiftRight(KEY_RIGHT))
+        if(!shiftRight(KEY_RIGHT, found2048, false))
         {
           *board = temp;
           return false;
