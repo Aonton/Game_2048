@@ -43,7 +43,7 @@ bool Collision::NewPosition(struct Position pos, int key)
           future_pos.col++;
         break;
         default:
-          // empty
+          cout<< "Collision::NewPosition - ERROR: INCORRECT KEY!" << endl;
         break;
       }
 
@@ -88,10 +88,6 @@ bool Collision::NewPosition(struct Position pos, int key)
                          );
           collision = true;
       }
-      else
-      {
-        // No Collision
-      }
 
       pos = future_pos;
     }
@@ -109,7 +105,7 @@ bool Collision::shiftUp(int key)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      collision = collision || NewPosition(pos, key);
+      collision = NewPosition(pos, key) || collision;
     }
   }
 
@@ -121,11 +117,11 @@ bool Collision::shiftDown(int key)
   struct Position pos;
   bool collision = false;
 
-  for(pos.row=board->getRowSize(); pos.row>=0; pos.row--)
+  for(pos.row=board->getRowSize()-1; pos.row>=0; pos.row--)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      collision = collision || NewPosition(pos, key);
+      collision = NewPosition(pos, key) || collision;
     }
   }
 
@@ -137,11 +133,11 @@ bool Collision::shiftRight(int key)
   struct Position pos;
   bool collision = false;
 
-  for(pos.col=board->getColSize(); pos.col>=0; pos.col++)
+  for(pos.col=board->getColSize()-1; pos.col>=0; pos.col--)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      collision = collision || NewPosition(pos, key);
+      collision = NewPosition(pos, key) || collision;
     }
   }
 
@@ -157,7 +153,7 @@ bool Collision::shiftLeft(int key)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      collision = collision || NewPosition(pos, key);
+      collision = NewPosition(pos, key) || collision;
     }
   }
 
@@ -188,4 +184,31 @@ bool Collision::shiftAll(int key)
   }
 
   return collision;
+}
+
+bool Collision::testShift()
+{
+  GameBoard temp(*board);
+
+  // TO DO: fix the double design later
+  if(!shiftUp(KEY_UP))
+  {
+    *board = temp;
+    if(!shiftDown(KEY_DOWN))
+    {
+      *board = temp;
+      if(!shiftLeft(KEY_LEFT))
+      {
+        *board = temp;
+        if(!shiftRight(KEY_RIGHT))
+        {
+          *board = temp;
+          return false;
+        }
+      }
+    }
+  }
+
+  *board = temp;
+  return true;
 }

@@ -45,16 +45,12 @@ Position PieceGen::GeneratePos()
     return pos;
 }
 
-bool PieceGen::setBoard()
+void PieceGen::setBoard()
 {
     int val = GeneratePiece();
     struct Position pos;
 
-    if(board->calFull())
-    {
-        return false;
-    }
-    else
+    if(!board->calFull())
     {
       do{
         pos = GeneratePos();
@@ -62,6 +58,4 @@ bool PieceGen::setBoard()
 
       board->setPiece(val,pos.row,pos.col);
     }
-
-    return true;
 }

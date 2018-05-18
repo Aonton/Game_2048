@@ -26,6 +26,8 @@ void ClearScreen();
 
 // TO DO PUT MAIN INTO GAME class or display class
 // add display centering
+// Add more error messages
+// Create Log File
 
 void DisplayTopMenu();
 void DisplayBottomMenu(int);
@@ -61,13 +63,14 @@ int main()
 
       if(collision || board.calEmpty())
       {
-        contGame = piece.setBoard();
+        piece.setBoard();
         // DO NOT CLEAR SCREEN FIX POSITION
         // TO DO ADD COLOR
-        ClearScreen();
+        //ClearScreen();
         DisplayTopMenu();
         board.PrintBoard();
         DisplayBottomMenu(score.getScore());
+        contGame=collDetec.testShift();
       }
     }
   }

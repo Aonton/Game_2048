@@ -11,6 +11,7 @@ class GameBoard
 {
   public:
     GameBoard(int,int,int);
+    GameBoard(GameBoard&);
 
     void PrintBoard();
     void setPiece(int,int,int);
@@ -21,6 +22,8 @@ class GameBoard
     bool calEmpty();
 
     bool operator == (GameBoard&);
+    bool operator != (GameBoard&);
+    void operator = (GameBoard&);
 
   private:
     void PrintBar();

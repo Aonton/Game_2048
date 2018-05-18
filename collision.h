@@ -23,6 +23,7 @@ class Collision
     Collision(GameBoard&);
 
     bool shiftAll(int);
+    bool testShift();
 
   private:
     bool NewPosition(struct Position, int);

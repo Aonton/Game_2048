@@ -23,6 +23,15 @@ GameBoard::GameBoard(int offset, int spacesBtw, int emptyLineNum)
   GameBoard::emptyLineNum = emptyLineNum;
 }
 
+GameBoard::GameBoard(GameBoard& board)
+{
+  this->offset = board.offset;
+  this->spacesBtw = board.spacesBtw;
+  this->emptyLineNum = board.emptyLineNum;
+
+  *this = board;
+}
+
 void GameBoard::PrintOffset()
 {
   for(int i=0; i<GameBoard::offset; i++)
@@ -220,4 +229,30 @@ bool GameBoard::operator == (GameBoard& compareBoard)
   }
 
   return true;
+}
+
+bool GameBoard::operator != (GameBoard& compareBoard)
+{
+  return (!(*this == compareBoard));
+}
+
+void GameBoard::operator = (GameBoard& compareBoard)
+{
+  if(*this != compareBoard)
+  {
+    if(this->getRowSize() == compareBoard.getRowSize() &&
+       this->getColSize() == compareBoard.getColSize())
+    {
+        for(int i=0; i<this->getRowSize(); i++)
+        {
+          for(int j=0; j<this->getColSize(); j++)
+          {
+            if(this->board_nums[i][j]!=compareBoard.board_nums[i][j])
+            {
+              this->board_nums[i][j] = compareBoard.board_nums[i][j];
+            }
+          }
+        }
+    }
+  }
 }
