@@ -19,6 +19,7 @@ using namespace std;
 #define REDO 114
 #define EXIT 101
 #define CONT 99
+#define RESET 115
 
 class UserInput
 {

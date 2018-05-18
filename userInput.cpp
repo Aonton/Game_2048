@@ -35,6 +35,8 @@ int UserInput::Input()
           break;
       case REDO:
           break;
+      case RESET:
+          break;
       case EXIT:
           cout<< "GAME OVER" << endl;
           exit(1);

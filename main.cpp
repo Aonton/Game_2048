@@ -21,6 +21,7 @@ using namespace std;
 #define REDO 114
 #define EXIT 101
 #define CONT 99
+#define RESET 115
 
 void ClearScreen();
 
@@ -31,6 +32,7 @@ void ClearScreen();
 
 void DisplayTopMenu();
 void DisplayBottomMenu(int);
+void DisplayGame(int, GameBoard);
 
 // Only works for MAC OSX - TO DO: Make Windows Verison
 int main()
@@ -53,50 +55,62 @@ int main()
   bool Objective2048 = true;
 
   int key = true;
-  DisplayTopMenu();
-  board.PrintBoard();
-  DisplayBottomMenu(score.getScore());
+  DisplayGame(score.getScore(),board);
 
   while(contGame)
   {
     key = input.Input();
-
-    if(key!=CONT && key)
+    if(key!=RESET)
     {
-      collision = collDetec.shiftAll(key, found2048);
-
-      if(collision || board.calEmpty())
+      if(key!=REDO)
       {
-        piece.setBoard();
-        // DO NOT CLEAR SCREEN FIX POSITION
-        // TO DO ADD COLOR
-        //ClearScreen();
-        DisplayTopMenu();
-        board.PrintBoard();
-        DisplayBottomMenu(score.getScore());
+        if(key!=CONT && key)
+        {
+          collision = collDetec.shiftAll(key, found2048);
 
-        if(Objective2048)
-        {
-          contGame = (!found2048) && collDetec.testShift(fake);
-        }
-        else
-        {
-          contGame = collDetec.testShift(fake);
-        }
-
-        if(Objective2048 && found2048)
-        {
-          cout<< "YOU WIN" << endl;
-          // add timer for press?
-          cout<< "Press (SHIFT + C) to continue" << endl;
-          key = input.Input();
-          if(key==CONT)
+          if(collision || board.calEmpty())
           {
-            contGame = true;
-            Objective2048 = false;
+            piece.setBoard();
+            // DO NOT CLEAR SCREEN FIX POSITION
+            // TO DO ADD COLOR
+            //ClearScreen();
+            DisplayGame(score.getScore(),board);
+
+            if(Objective2048)
+            {
+              contGame = (!found2048) && collDetec.testShift(fake);
+            }
+            else
+            {
+              contGame = collDetec.testShift(fake);
+            }
+
+            if(Objective2048 && found2048)
+            {
+              cout<< "YOU WIN" << endl;
+              // add timer for press?
+              cout<< "Press (SHIFT + C) to continue" << endl;
+              key = input.Input();
+              if(key==CONT)
+              {
+                contGame = true;
+                Objective2048 = false;
+              }
+            }
           }
         }
       }
+      else
+      {
+        collDetec.UndoCollision();
+        DisplayGame(score.getScore(),board);
+      }
+    }
+    else
+    {
+      board.boardReset();
+      score.scoreReset();
+      DisplayGame(score.getScore(),board);
     }
   }
 
@@ -107,6 +121,13 @@ int main()
 void ClearScreen()
 {
   cout << string( 100, '\n' );
+}
+
+void DisplayGame(int score, GameBoard board)
+{
+  DisplayTopMenu();
+  board.PrintBoard();
+  DisplayBottomMenu(score);
 }
 
 void DisplayTopMenu()

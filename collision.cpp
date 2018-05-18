@@ -12,12 +12,14 @@
 using namespace std;
 
 // TO DO NOT MAKE THIS GLOBAL
+// FOR NOW MAKE REDO - SCORE PREV BOARD -> GOAL only redo changed blocks
 #define END 2048
 
-Collision::Collision(GameBoard& board, Score& score)
+Collision::Collision(GameBoard& board, Score& score): prevBoard(board)
 {
   Collision::board = &board;
   Collision::score = &score;
+  prevScore = 0;
 }
 
 bool Collision::NewPosition(struct Position pos, int key, bool& found2048, bool actualShift)
@@ -179,6 +181,8 @@ bool Collision::shiftLeft(int key, bool& found2048, bool actualShift = true)
 bool Collision::shiftAll(int key, bool& found2048)
 {
   bool collision = false;
+  prevBoard = *board;
+  prevScore = score->getScore();
 
   switch(key)
   {
@@ -228,4 +232,10 @@ bool Collision::testShift(bool& found2048)
 
   *board = temp;
   return true;
+}
+
+void Collision::UndoCollision()
+{
+  *board = prevBoard;
+  score->setScore(prevScore);
 }

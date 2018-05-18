@@ -20,6 +20,7 @@ class GameBoard
     int getPiece(int,int);
     bool calFull();
     bool calEmpty();
+    void boardReset();
 
     bool operator == (GameBoard&);
     bool operator != (GameBoard&);

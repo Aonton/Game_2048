@@ -25,3 +25,16 @@ void Score::addToScore(int points)
     score+=points;
   }
 }
+
+void Score::scoreReset()
+{
+  score=0;
+}
+
+void Score::setScore(int score)
+{
+  if(score>=0)
+  {
+    Score::score = score;
+  }
+}

@@ -256,3 +256,14 @@ void GameBoard::operator = (GameBoard& compareBoard)
     }
   }
 }
+
+void GameBoard::boardReset()
+{
+  for(int row=0; row<GameBoard::ROW_NUM; row++)
+  {
+    for(int col=0; col<GameBoard::COL_NUM; col++)
+    {
+      board_nums[row][col] = 0;
+    }
+  }
+}

@@ -25,6 +25,7 @@ class Collision
 
     bool shiftAll(int, bool&);
     bool testShift(bool&);
+    void UndoCollision();
 
   private:
     bool NewPosition(struct Position, int, bool&, bool);
@@ -35,7 +36,9 @@ class Collision
     bool shiftRight(int, bool&, bool);
 
     GameBoard* board;
+    GameBoard prevBoard;
     Score* score;
+    int prevScore;
 
 };
 

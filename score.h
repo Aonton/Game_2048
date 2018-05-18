@@ -13,7 +13,9 @@ class Score
   public:
     Score();
     void addToScore(int);
+    void scoreReset();;
     int getScore();
+    void setScore(int);
   private:
     int score;
 };
