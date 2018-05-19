@@ -22,16 +22,16 @@ int UserInput::Input()
 
       switch((input=getch())) {
       case KEY_UP:
-          cout<< "UP" << endl;
+          //cout<< "UP" << endl;
           break;
       case KEY_DOWN:
-          cout<< "DOWN" << endl;
+          //cout<< "DOWN" << endl;
           break;
       case KEY_LEFT:
-          cout<< "LEFT" << endl;
+          //cout<< "LEFT" << endl;
           break;
       case KEY_RIGHT:
-          cout<< "RIGHT" << endl;
+          //cout<< "RIGHT" << endl;
           break;
       case REDO:
           break;

@@ -25,10 +25,6 @@ GameBoard::GameBoard(int offset, int spacesBtw, int emptyLineNum)
 
 GameBoard::GameBoard(GameBoard& board)
 {
-  this->offset = board.offset;
-  this->spacesBtw = board.spacesBtw;
-  this->emptyLineNum = board.emptyLineNum;
-
   *this = board;
 }
 
@@ -254,6 +250,10 @@ void GameBoard::operator = (GameBoard& compareBoard)
           }
         }
     }
+
+    this->offset = compareBoard.offset;
+    this->spacesBtw = compareBoard.spacesBtw;
+    this->emptyLineNum = compareBoard.emptyLineNum;
   }
 }
 
