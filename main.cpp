@@ -43,7 +43,7 @@ int main()
   pieces.push_back(2);
   pieces.push_back(4);
   // min for max game is 6 for space
-  GameBoard board(9,6,2);
+  GameBoard board(10,6,2);
   UserInput input;
   PieceGen piece(pieces,board);
   Score score;
@@ -55,6 +55,8 @@ int main()
   bool Objective2048 = true;
 
   int key = true;
+  piece.setBoard();
+  piece.setBoard();
   DisplayGame(score.getScore(),board);
 
   while(contGame)
@@ -68,12 +70,12 @@ int main()
         {
           collision = collDetec.shiftAll(key, found2048);
 
-          if(collision || board.calEmpty())
+          if(collision)
           {
             piece.setBoard();
             // DO NOT CLEAR SCREEN FIX POSITION
             // TO DO ADD COLOR
-            //ClearScreen();
+            ClearScreen();
             DisplayGame(score.getScore(),board);
 
             if(Objective2048)
