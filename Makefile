@@ -7,8 +7,8 @@ CPP = g++
 CC = gcc
 CFLAGS = -c 
 
-game: main.o board.o userInput.o pieceGenerator.o collision.o position.o score.o
-	$(CPP) board.o main.o userInput.o pieceGenerator.o collision.o position.o score.o -o game 
+game: main.o board.o userInput.o pieceGenerator.o collision.o position.o score.o game2048.o
+	$(CPP) board.o main.o userInput.o pieceGenerator.o collision.o position.o score.o game2048.o -o game 
 main.o: main.cpp
 	$(CPP) $(CFLAGS) main.cpp
 board.o: board.cpp
@@ -23,6 +23,8 @@ position.o: position.cpp
 	$(CPP) $(CFLAGS) position.cpp
 score.o: score.cpp
 	$(CPP) $(CFLAGS) score.cpp
+game2048.o: game2048.cpp
+	$(CPP) $(CFLAGS) game2048.cpp
 clean: 
 	rm -rf *.o
 
