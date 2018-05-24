@@ -11,7 +11,7 @@
 #include <iostream>
 #include <list>
 #include "board.h"
-#include "position.cpp"
+#include "position.h"
 using namespace std;
 
 class PieceGen

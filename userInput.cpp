@@ -16,7 +16,6 @@ UserInput::UserInput()
 Keys UserInput::Input()
 {
   int input = 0;
-  //while(true)
 
   input = 0;
   input = getch();

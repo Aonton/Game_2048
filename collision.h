@@ -9,7 +9,7 @@
 #define COLLISION_H
 #include <iostream>
 #include "board.h"
-#include "position.cpp"
+#include "position.h"
 #include "score.h"
 #include "KeyPress.h"
 using namespace std;
