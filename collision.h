@@ -11,29 +11,26 @@
 #include "board.h"
 #include "position.cpp"
 #include "score.h"
+#include "KeyPress.h"
 using namespace std;
-
-#define KEY_UP 65
-#define KEY_DOWN 66
-#define KEY_LEFT 68
-#define KEY_RIGHT 67
+using namespace keyPress;
 
 class Collision
 {
   public:
     Collision(GameBoard&, Score&);
 
-    bool shiftAll(int, bool&);
+    bool shiftAll(Keys, bool&);
     bool testShift(bool&);
     void UndoCollision();
 
   private:
-    bool NewPosition(struct Position, int, bool&, bool);
+    bool NewPosition(struct Position, Keys, bool&, bool);
 
-    bool shiftUp(int, bool&, bool);
-    bool shiftDown(int, bool&, bool);
-    bool shiftLeft(int, bool&, bool);
-    bool shiftRight(int, bool&, bool);
+    bool shiftUp(Keys, bool&, bool);
+    bool shiftDown(Keys, bool&, bool);
+    bool shiftLeft(Keys, bool&, bool);
+    bool shiftRight(Keys, bool&, bool);
 
     GameBoard* board;
     GameBoard prevBoard;

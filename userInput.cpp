@@ -13,14 +13,17 @@ UserInput::UserInput()
   // EMPTY
 }
 
-int UserInput::Input()
+Keys UserInput::Input()
 {
   int input = 0;
   //while(true)
-  {
-      input = 0;
 
-      switch((input=getch())) {
+  input = 0;
+  input = getch();
+  Keys key = static_cast<Keys>(input);
+
+  switch(key)
+  {
       case KEY_UP:
           //cout<< "UP" << endl;
           break;
@@ -43,12 +46,11 @@ int UserInput::Input()
       case CONT:
         break;
       default:
-          return false;
+          return OTHER;
           break;
-      }
     }
 
-    return input;
+    return key;
 }
 
 int UserInput::getch(void)

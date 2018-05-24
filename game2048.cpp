@@ -13,7 +13,7 @@ Game2048::Game2048():board(10,6,2),piece(pieces,board),collDetec(board,score)
   fake = false;
   found2048 = false;
   Objective2048 = true;
-  key = 1;
+  key = OTHER;
 }
 
 void Game2048::ClearScreen()
@@ -77,7 +77,7 @@ void Game2048::Start()
     {
       if(key!=REDO)
       {
-        if(key!=CONT && key)
+        if(key!=CONT && key!=OTHER)
         {
           collision = collDetec.shiftAll(key, found2048);
 
@@ -123,6 +123,8 @@ void Game2048::Start()
     {
       board.boardReset();
       score.scoreReset();
+      piece.setBoard();
+      piece.setBoard();
       DisplayGame(score.getScore(),board);
     }
   }

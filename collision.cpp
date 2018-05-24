@@ -22,7 +22,7 @@ Collision::Collision(GameBoard& board, Score& score): prevBoard(board)
   prevScore = 0;
 }
 
-bool Collision::NewPosition(struct Position pos, int key, bool& found2048, bool actualShift)
+bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048, bool actualShift)
 {
   struct Position future_pos = pos;
   list<int> combineMarker;
@@ -114,7 +114,7 @@ bool Collision::NewPosition(struct Position pos, int key, bool& found2048, bool 
   return collision;
 }
 
-bool Collision::shiftUp(int key, bool& found2048, bool actualShift = true)
+bool Collision::shiftUp(Keys key, bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -130,7 +130,7 @@ bool Collision::shiftUp(int key, bool& found2048, bool actualShift = true)
   return collision;
 }
 
-bool Collision::shiftDown(int key, bool& found2048, bool actualShift = true)
+bool Collision::shiftDown(Keys key, bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -146,7 +146,7 @@ bool Collision::shiftDown(int key, bool& found2048, bool actualShift = true)
   return collision;
 }
 
-bool Collision::shiftRight(int key, bool& found2048, bool actualShift = true)
+bool Collision::shiftRight(Keys key, bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -162,7 +162,7 @@ bool Collision::shiftRight(int key, bool& found2048, bool actualShift = true)
   return collision;
 }
 
-bool Collision::shiftLeft(int key, bool& found2048, bool actualShift = true)
+bool Collision::shiftLeft(Keys key, bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -178,7 +178,7 @@ bool Collision::shiftLeft(int key, bool& found2048, bool actualShift = true)
   return collision;
 }
 
-bool Collision::shiftAll(int key, bool& found2048)
+bool Collision::shiftAll(Keys key, bool& found2048)
 {
   bool collision = false;
   prevBoard = *board;
@@ -236,6 +236,9 @@ bool Collision::testShift(bool& found2048)
 
 void Collision::UndoCollision()
 {
-  *board = prevBoard;
-  score->setScore(prevScore);
+  if(!(prevBoard.calEmpty()))
+  {
+    *board = prevBoard;
+    score->setScore(prevScore);
+  }
 }

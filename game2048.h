@@ -12,16 +12,9 @@
 #include "PieceGenerator.h"
 #include "collision.h"
 #include "score.h"
+#include "keyPress.h"
 using namespace std;
-
-#define KEY_UP 65
-#define KEY_DOWN 66
-#define KEY_LEFT 68
-#define KEY_RIGHT 67
-#define REDO 114
-#define EXIT 101
-#define CONT 99
-#define RESET 115
+using namespace keyPress;
 
 class Game2048
 {
@@ -47,7 +40,7 @@ class Game2048
     bool fake;
     bool found2048;
     bool Objective2048;
-    int key;
+    Keys key;
 };
 
-#endif 
+#endif

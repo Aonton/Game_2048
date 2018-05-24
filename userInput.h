@@ -10,23 +10,16 @@
 #include <termios.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "KeyPress.h"
 using namespace std;
-
-#define KEY_UP 65
-#define KEY_DOWN 66
-#define KEY_LEFT 68
-#define KEY_RIGHT 67
-#define REDO 114
-#define EXIT 101
-#define CONT 99
-#define RESET 115
+using namespace keyPress;
 
 class UserInput
 {
   public:
     UserInput();
 
-    int Input();
+    Keys Input();
     int getch(void);
 
   private:
