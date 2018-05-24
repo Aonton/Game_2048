@@ -4,7 +4,7 @@
 */
 #include "Game2048.h"
 
-Game2048::Game2048():board(10,6,2),piece(pieces,board),collDetec(board,score)
+Game2048::Game2048():board(10,6,2),piece(pieces,board),collDetec(board,score,2048)
 {
   Game2048::contGame = true;
   pieces.push_back(2);

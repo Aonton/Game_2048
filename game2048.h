@@ -41,6 +41,8 @@ class Game2048
     bool found2048;
     bool Objective2048;
     Keys key;
+
+    static const int end = 2048;
 };
 
 #endif

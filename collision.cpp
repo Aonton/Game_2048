@@ -11,15 +11,13 @@
 #include "collision.h"
 using namespace std;
 
-// TO DO NOT MAKE THIS GLOBAL
 // FOR NOW MAKE REDO - SCORE PREV BOARD -> GOAL only redo changed blocks
-#define END 2048
 
-Collision::Collision(GameBoard& board, Score& score): prevBoard(board)
+Collision::Collision(GameBoard& board, Score& score, const int end_num): prevBoard(board), end(end_num)
 {
   Collision::board = &board;
   Collision::score = &score;
-  prevScore = 0;
+  Collision::prevScore = 0;
 }
 
 bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048, bool actualShift)
@@ -70,7 +68,7 @@ bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048, bool
          it == combineMarker.end())
       {
           if(board->getPiece(pos.row,pos.col) +
-             board->getPiece(future_pos.row,future_pos.col) == END)
+             board->getPiece(future_pos.row,future_pos.col) == end)
           {
             found2048 = true;
           }

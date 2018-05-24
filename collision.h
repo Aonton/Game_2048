@@ -18,7 +18,7 @@ using namespace keyPress;
 class Collision
 {
   public:
-    Collision(GameBoard&, Score&);
+    Collision(GameBoard&, Score&, const int);
 
     bool shiftAll(Keys, bool&);
     bool testShift(bool&);
@@ -36,6 +36,7 @@ class Collision
     GameBoard prevBoard;
     Score* score;
     int prevScore;
+    const int end;
 
 };
 
