@@ -6,7 +6,7 @@ LDFLAGS :=
 CPPFLAGS := 
 CXXFLAGS := 
 
-main.exe: $(OBJ_FILES)
+game: $(OBJ_FILES)
 	g++ $(LDFLAGS) -o $@ $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
