@@ -21,16 +21,16 @@ class Collision
     Collision(GameBoard&, Score&, const int);
 
     bool shiftAll(Keys, bool&);
-    bool testShift(bool&);
+    bool testShift();
     void UndoCollision();
 
   private:
     bool NewPosition(struct Position, Keys, bool&, bool);
 
-    bool shiftUp(Keys, bool&, bool);
-    bool shiftDown(Keys, bool&, bool);
-    bool shiftLeft(Keys, bool&, bool);
-    bool shiftRight(Keys, bool&, bool);
+    bool shiftUp(bool&, bool);
+    bool shiftDown(bool&, bool);
+    bool shiftLeft(bool&, bool);
+    bool shiftRight(bool&, bool);
 
     GameBoard* board;
     GameBoard prevBoard;

@@ -9,7 +9,6 @@ using namespace std;
 
 // Sockets?
 // TO DO FIX THESE REPEATED VALUES
-// TO DO PUT MAIN INTO GAME class or display class
 // add display centering
 // Add more error messages
 // Create Log File

@@ -10,7 +10,6 @@ Game2048::Game2048():board(10,6,2),piece(pieces,board),collDetec(board,score,204
   pieces.push_back(2);
   pieces.push_back(4);
   collision = false;
-  fake = false;
   found2048 = false;
   Objective2048 = true;
   key = OTHER;
@@ -91,11 +90,11 @@ void Game2048::Start()
 
             if(Objective2048)
             {
-              contGame = (!found2048) && collDetec.testShift(fake);
+              contGame = (!found2048) && collDetec.testShift();
             }
             else
             {
-              contGame = collDetec.testShift(fake);
+              contGame = collDetec.testShift();
             }
 
             if(Objective2048 && found2048)

@@ -112,7 +112,7 @@ bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048, bool
   return collision;
 }
 
-bool Collision::shiftUp(Keys key, bool& found2048, bool actualShift = true)
+bool Collision::shiftUp(bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -121,14 +121,14 @@ bool Collision::shiftUp(Keys key, bool& found2048, bool actualShift = true)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      collision = NewPosition(pos, key, found2048, actualShift) || collision;
+      collision = NewPosition(pos, KEY_UP, found2048, actualShift) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftDown(Keys key, bool& found2048, bool actualShift = true)
+bool Collision::shiftDown(bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -137,14 +137,14 @@ bool Collision::shiftDown(Keys key, bool& found2048, bool actualShift = true)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      collision = NewPosition(pos, key, found2048, actualShift) || collision;
+      collision = NewPosition(pos, KEY_DOWN, found2048, actualShift) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftRight(Keys key, bool& found2048, bool actualShift = true)
+bool Collision::shiftRight(bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -153,14 +153,14 @@ bool Collision::shiftRight(Keys key, bool& found2048, bool actualShift = true)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      collision = NewPosition(pos, key, found2048, actualShift) || collision;
+      collision = NewPosition(pos, KEY_RIGHT, found2048, actualShift) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftLeft(Keys key, bool& found2048, bool actualShift = true)
+bool Collision::shiftLeft(bool& found2048, bool actualShift = true)
 {
   struct Position pos;
   bool collision = false;
@@ -169,7 +169,7 @@ bool Collision::shiftLeft(Keys key, bool& found2048, bool actualShift = true)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      collision = NewPosition(pos, key, found2048, actualShift) || collision;
+      collision = NewPosition(pos, KEY_LEFT, found2048, actualShift) || collision;
     }
   }
 
@@ -185,16 +185,16 @@ bool Collision::shiftAll(Keys key, bool& found2048)
   switch(key)
   {
     case KEY_UP:
-      collision = shiftUp(key, found2048);
+      collision = shiftUp(found2048);
     break;
     case KEY_DOWN:
-      collision = shiftDown(key, found2048);
+      collision = shiftDown(found2048);
     break;
     case KEY_LEFT:
-      collision = shiftLeft(key, found2048);
+      collision = shiftLeft(found2048);
     break;
     case KEY_RIGHT:
-      collision = shiftRight(key, found2048);
+      collision = shiftRight(found2048);
     break;
     default:
       // empty
@@ -204,22 +204,21 @@ bool Collision::shiftAll(Keys key, bool& found2048)
   return collision;
 }
 
-// DON"T WANT TEST SHIFT TO HAVE FOUND 2048
-bool Collision::testShift(bool& found2048)
+bool Collision::testShift()
 {
+  bool found2048;
   GameBoard temp(*board);
 
-  // TO DO: fix the double design later
-  if(!shiftUp(KEY_UP, found2048, false))
+  if(!shiftUp(found2048, false))
   {
     *board = temp;
-    if(!shiftDown(KEY_DOWN, found2048, false))
+    if(!shiftDown(found2048, false))
     {
       *board = temp;
-      if(!shiftLeft(KEY_LEFT, found2048, false))
+      if(!shiftLeft(found2048, false))
       {
         *board = temp;
-        if(!shiftRight(KEY_RIGHT, found2048, false))
+        if(!shiftRight(found2048, false))
         {
           *board = temp;
           return false;

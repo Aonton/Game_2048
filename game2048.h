@@ -37,7 +37,6 @@ class Game2048
     Score score;
     Collision collDetec;
     bool collision;
-    bool fake;
     bool found2048;
     bool Objective2048;
     Keys key;
