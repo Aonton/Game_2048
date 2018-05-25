@@ -74,6 +74,7 @@ void GameBoard::PrintEmptyLine()
 
 }
 
+// Operating overload board and use different stream operator
 void GameBoard::PrintBoard()
 {
   string str;

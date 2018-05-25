@@ -11,6 +11,9 @@ game: $(OBJ_FILES)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	g++ $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+clean:
+	rm -rf *.o
+	rm log.txt
 
 CXXFLAGS += -MMD
 -include $(OBJ_FILES:.o=.d)

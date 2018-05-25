@@ -4,6 +4,8 @@
 */
 
 #include <iostream>
+#include "logger.h"
+#include "LogModule.h"
 #include "game2048.h"
 using namespace std;
 
@@ -14,6 +16,10 @@ using namespace std;
 // Only works for MAC OSX - TO DO: Make Windows Verison
 int main()
 {
-  Game2048 game;
+  Log log;
+  log.moduleOn(Main);
+  Game2048 game(log,false);
+  log.writeToLog(Main,"Game Starting ...");
   game.Start();
+  log.writeToLog(Main,"Game Ended");
 }

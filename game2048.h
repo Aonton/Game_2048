@@ -15,13 +15,15 @@
 #include "collision.h"
 #include "score.h"
 #include "keyPress.h"
+#include "logger.h"
+#include "LogModule.h"
 using namespace std;
 using namespace keyPress;
 
 class Game2048
 {
   public:
-    Game2048();
+    Game2048(Log&, bool);
     void Start();
 
   private:
@@ -34,6 +36,7 @@ class Game2048
     void Win(bool&, bool&);
     void Redo();
     void Reset();
+    void WriteOnGameLog(string);
 
     list<int> pieces;
     GameBoard board;
@@ -41,6 +44,7 @@ class Game2048
     Collision collDetec;
     PieceGen piece;
     UserInput input;
+    Log* logger;
 
     static const int end = 2048;
 };

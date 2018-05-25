@@ -4,10 +4,15 @@
 */
 #include "Game2048.h"
 
-Game2048::Game2048():board(10,6,2), collDetec(board,score,2048), piece(pieces,board)
+Game2048::Game2048(Log& log, bool enableGameLog):board(10,6,2), collDetec(board,score,2048), piece(pieces,board)
 {
   pieces.push_back(2);
   pieces.push_back(4);
+  Game2048::logger = &log;
+  if(enableGameLog)
+  {
+    logger->moduleOn(Game);
+  }
 }
 
 void Game2048::ClearScreen()
@@ -91,7 +96,7 @@ void Game2048::Start()
             piece.setBoard();
             // DO NOT CLEAR SCREEN FIX POSITION
             // TO DO ADD COLOR
-            ClearScreen();
+            //ClearScreen();
             DisplayGame();
 
             if(objective2048)
@@ -135,6 +140,7 @@ void Game2048::Win(bool& contGame, bool& objective2048)
 {
   Keys key;
   cout<< "YOU WIN" << endl;
+  WriteOnGameLog("User Won!");
   // add timer for press?
   cout<< "Press (SHIFT + C) to continue" << endl;
   key = input.Input();
@@ -142,6 +148,7 @@ void Game2048::Win(bool& contGame, bool& objective2048)
   {
     contGame = true;
     objective2048 = false;
+    WriteOnGameLog("Continuing game after 2048 goal");
   }
 }
 
@@ -149,6 +156,7 @@ void Game2048::Redo()
 {
   collDetec.UndoCollision();
   DisplayGame();
+  WriteOnGameLog("Redoing Board ...");
 }
 
 void Game2048::Reset()
@@ -158,4 +166,10 @@ void Game2048::Reset()
   piece.setBoard();
   piece.setBoard();
   DisplayGame();
+  WriteOnGameLog("Resetting Board ...");
+}
+
+void Game2048::WriteOnGameLog(string text)
+{
+  logger->writeToLog(Game,text);
 }
