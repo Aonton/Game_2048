@@ -25,12 +25,12 @@ class Collision
     void UndoCollision();
 
   private:
-    bool NewPosition(struct Position, Keys, bool&, bool);
+    bool NewPosition(struct Position, Keys, bool&);
 
-    bool shiftUp(bool&, bool);
-    bool shiftDown(bool&, bool);
-    bool shiftLeft(bool&, bool);
-    bool shiftRight(bool&, bool);
+    bool shiftUp(bool&);
+    bool shiftDown(bool&);
+    bool shiftLeft(bool&);
+    bool shiftRight(bool&);
 
     GameBoard* board;
     GameBoard prevBoard;

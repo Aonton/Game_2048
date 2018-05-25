@@ -11,8 +11,6 @@
 #include "collision.h"
 using namespace std;
 
-// FOR NOW MAKE REDO - SCORE PREV BOARD -> GOAL only redo changed blocks
-
 Collision::Collision(GameBoard& board, Score& score, const int end_num): prevBoard(board), end(end_num)
 {
   Collision::board = &board;
@@ -20,7 +18,7 @@ Collision::Collision(GameBoard& board, Score& score, const int end_num): prevBoa
   Collision::prevScore = 0;
 }
 
-bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048, bool actualShift)
+bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048)
 {
   struct Position future_pos = pos;
   list<int> combineMarker;
@@ -73,11 +71,8 @@ bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048, bool
             found2048 = true;
           }
 
-          if(actualShift)
-          {
-            score->addToScore(board->getPiece(pos.row,pos.col) +
+          score->addToScore(board->getPiece(pos.row,pos.col) +
                               board->getPiece(future_pos.row,future_pos.col));
-          }
 
           board->setPiece(board->getPiece(pos.row,pos.col) +
                           board->getPiece(future_pos.row,future_pos.col),
@@ -112,7 +107,7 @@ bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048, bool
   return collision;
 }
 
-bool Collision::shiftUp(bool& found2048, bool actualShift = true)
+bool Collision::shiftUp(bool& found2048)
 {
   struct Position pos;
   bool collision = false;
@@ -121,14 +116,14 @@ bool Collision::shiftUp(bool& found2048, bool actualShift = true)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      collision = NewPosition(pos, KEY_UP, found2048, actualShift) || collision;
+      collision = NewPosition(pos, KEY_UP, found2048) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftDown(bool& found2048, bool actualShift = true)
+bool Collision::shiftDown(bool& found2048)
 {
   struct Position pos;
   bool collision = false;
@@ -137,14 +132,14 @@ bool Collision::shiftDown(bool& found2048, bool actualShift = true)
   {
     for( pos.col=0; pos.col<board->getColSize(); pos.col++)
     {
-      collision = NewPosition(pos, KEY_DOWN, found2048, actualShift) || collision;
+      collision = NewPosition(pos, KEY_DOWN, found2048) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftRight(bool& found2048, bool actualShift = true)
+bool Collision::shiftRight(bool& found2048)
 {
   struct Position pos;
   bool collision = false;
@@ -153,14 +148,14 @@ bool Collision::shiftRight(bool& found2048, bool actualShift = true)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      collision = NewPosition(pos, KEY_RIGHT, found2048, actualShift) || collision;
+      collision = NewPosition(pos, KEY_RIGHT, found2048) || collision;
     }
   }
 
   return collision;
 }
 
-bool Collision::shiftLeft(bool& found2048, bool actualShift = true)
+bool Collision::shiftLeft(bool& found2048)
 {
   struct Position pos;
   bool collision = false;
@@ -169,7 +164,7 @@ bool Collision::shiftLeft(bool& found2048, bool actualShift = true)
   {
     for(pos.row=0; pos.row<board->getColSize(); pos.row++)
     {
-      collision = NewPosition(pos, KEY_LEFT, found2048, actualShift) || collision;
+      collision = NewPosition(pos, KEY_LEFT, found2048) || collision;
     }
   }
 
@@ -207,27 +202,28 @@ bool Collision::shiftAll(Keys key, bool& found2048)
 bool Collision::testShift()
 {
   bool found2048;
-  GameBoard temp(*board);
+  prevBoard = *board;
+  prevScore = score->getScore();
 
-  if(!shiftUp(found2048, false))
+  if(!shiftUp(found2048))
   {
-    *board = temp;
-    if(!shiftDown(found2048, false))
+    UndoCollision();
+    if(!shiftDown(found2048))
     {
-      *board = temp;
-      if(!shiftLeft(found2048, false))
+      UndoCollision();
+      if(!shiftLeft(found2048))
       {
-        *board = temp;
-        if(!shiftRight(found2048, false))
+        UndoCollision();
+        if(!shiftRight(found2048))
         {
-          *board = temp;
+          UndoCollision();
           return false;
         }
       }
     }
   }
 
-  *board = temp;
+  UndoCollision();
   return true;
 }
 
