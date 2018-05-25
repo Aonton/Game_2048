@@ -18,12 +18,10 @@ class UserInput
 {
   public:
     UserInput();
-
     Keys Input();
-    int getch(void);
 
   private:
-
+    int getch(void);
 };
 
 #endif

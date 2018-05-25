@@ -76,14 +76,13 @@ void GameBoard::PrintEmptyLine()
 
 void GameBoard::PrintBoard()
 {
-
   string str;
   int length = 0;
   PrintBar();
-  PrintEmptyLine();
 
   for(int row=0; row<GameBoard::ROW_NUM; row++)
   {
+    PrintEmptyLine();
     PrintOffset();
     cout<< "|";
     PrintSpace();
@@ -115,12 +114,6 @@ void GameBoard::PrintBoard()
     cout<< endl;
     PrintEmptyLine();
     PrintBar();
-
-    // TO DO: better logic
-    if(row+1<GameBoard::ROW_NUM)
-    {
-      PrintEmptyLine();
-    }
   }
 
   cout<< endl;

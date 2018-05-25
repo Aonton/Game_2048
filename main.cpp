@@ -8,7 +8,6 @@
 using namespace std;
 
 // Sockets?
-// TO DO FIX THESE REPEATED VALUES
 // add display centering
 // Add more error messages
 // Create Log File

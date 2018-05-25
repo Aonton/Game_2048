@@ -7,6 +7,8 @@
 #define GAME_2048_H
 #include <iostream>
 #include <list>
+#include <cstdio>
+#include <ctime>
 #include "board.h"
 #include "userInput.h"
 #include "PieceGenerator.h"
@@ -20,26 +22,25 @@ class Game2048
 {
   public:
     Game2048();
-
-    void ClearScreen();
-    void DisplayTopMenu();
-    void DisplayBottomMenu(int);
-    void DisplayGame(int, GameBoard);
     void Start();
 
-
   private:
-    int contGame;
+    void ClearScreen();
+    void DisplayTopMenu();
+    void DisplayBottomMenu();
+    void DisplayGame();
+    void TimerToCont();
+    void SetUpGame();
+    void Win(bool&, bool&);
+    void Redo();
+    void Reset();
+
     list<int> pieces;
     GameBoard board;
-    UserInput input;
-    PieceGen piece;
     Score score;
     Collision collDetec;
-    bool collision;
-    bool found2048;
-    bool Objective2048;
-    Keys key;
+    PieceGen piece;
+    UserInput input;
 
     static const int end = 2048;
 };

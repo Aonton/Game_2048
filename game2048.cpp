@@ -4,15 +4,10 @@
 */
 #include "Game2048.h"
 
-Game2048::Game2048():board(10,6,2),piece(pieces,board),collDetec(board,score,2048)
+Game2048::Game2048():board(10,6,2), collDetec(board,score,2048), piece(pieces,board)
 {
-  Game2048::contGame = true;
   pieces.push_back(2);
   pieces.push_back(4);
-  collision = false;
-  found2048 = false;
-  Objective2048 = true;
-  key = OTHER;
 }
 
 void Game2048::ClearScreen()
@@ -20,11 +15,11 @@ void Game2048::ClearScreen()
   cout << string( 100, '\n' );
 }
 
-void Game2048::DisplayGame(int score, GameBoard board)
+void Game2048::DisplayGame()
 {
   DisplayTopMenu();
   board.PrintBoard();
-  DisplayBottomMenu(score);
+  DisplayBottomMenu();
 }
 
 void Game2048::DisplayTopMenu()
@@ -38,12 +33,12 @@ void Game2048::DisplayTopMenu()
 
 }
 
-void Game2048::DisplayBottomMenu(int score)
+void Game2048::DisplayBottomMenu()
 {
   // TO DO MAKE FLEXEBLE
   // TO DO CENTER TEXT FUNCTION
   int space = 33;
-  string str = to_string(score);
+  string str = to_string(score.getScore());
   int length = str.length();
 
   cout<< "*************************************************************************************************" << endl;
@@ -63,11 +58,22 @@ void Game2048::DisplayBottomMenu(int score)
   cout<< endl;
 }
 
-void Game2048::Start()
+void Game2048::SetUpGame()
 {
   piece.setBoard();
   piece.setBoard();
-  DisplayGame(score.getScore(),board);
+  DisplayGame();
+}
+
+void Game2048::Start()
+{
+  bool contGame = true;
+  bool collision = false;
+  bool found2048 = false;
+  bool objective2048 = false;
+  Keys key = OTHER;
+
+  SetUpGame();
 
   while(contGame)
   {
@@ -86,9 +92,9 @@ void Game2048::Start()
             // DO NOT CLEAR SCREEN FIX POSITION
             // TO DO ADD COLOR
             ClearScreen();
-            DisplayGame(score.getScore(),board);
+            DisplayGame();
 
-            if(Objective2048)
+            if(objective2048)
             {
               contGame = (!found2048) && collDetec.testShift();
             }
@@ -97,36 +103,57 @@ void Game2048::Start()
               contGame = collDetec.testShift();
             }
 
-            if(Objective2048 && found2048)
+            if(objective2048 && found2048)
             {
-              cout<< "YOU WIN" << endl;
-              // add timer for press?
-              cout<< "Press (SHIFT + C) to continue" << endl;
-              key = input.Input();
-              if(key==CONT)
-              {
-                contGame = true;
-                Objective2048 = false;
-              }
+              Win(contGame, objective2048);
             }
           }
         }
       }
       else
       {
-        collDetec.UndoCollision();
-        DisplayGame(score.getScore(),board);
+        Redo();
       }
     }
     else
     {
-      board.boardReset();
-      score.scoreReset();
-      piece.setBoard();
-      piece.setBoard();
-      DisplayGame(score.getScore(),board);
+      Reset();
     }
   }
 
   cout<< "GAME OVER" << endl;
+}
+
+void Game2048::TimerToCont()
+{
+  clock_t start = clock();
+}
+
+void Game2048::Win(bool& contGame, bool& objective2048)
+{
+  Keys key;
+  cout<< "YOU WIN" << endl;
+  // add timer for press?
+  cout<< "Press (SHIFT + C) to continue" << endl;
+  key = input.Input();
+  if(key==CONT)
+  {
+    contGame = true;
+    objective2048 = false;
+  }
+}
+
+void Game2048::Redo()
+{
+  collDetec.UndoCollision();
+  DisplayGame();
+}
+
+void Game2048::Reset()
+{
+  board.boardReset();
+  score.scoreReset();
+  piece.setBoard();
+  piece.setBoard();
+  DisplayGame();
 }

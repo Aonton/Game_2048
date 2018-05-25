@@ -12,10 +12,12 @@ class Score
 {
   public:
     Score();
-    void addToScore(int);
-    void scoreReset();;
+
     int getScore();
     void setScore(int);
+    void addToScore(int);
+    void scoreReset();
+
   private:
     int score;
 };
