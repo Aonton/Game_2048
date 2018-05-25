@@ -124,9 +124,11 @@ void Game2048::Start()
   cout<< "GAME OVER" << endl;
 }
 
+// TO DO: Needs multi-threading - might need timer class
 void Game2048::TimerToCont()
 {
   clock_t start = clock();
+  printf("Time elapsed: %f\n", ((double)clock() - start) / CLOCKS_PER_SEC);
 }
 
 void Game2048::Win(bool& contGame, bool& objective2048)
