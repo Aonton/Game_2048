@@ -12,12 +12,13 @@
 #include <list>
 #include "board.h"
 #include "position.h"
+#include "logger.h"
 using namespace std;
 
 class PieceGen
 {
   public:
-      PieceGen(list<int>,GameBoard&);
+      PieceGen(list<int>, GameBoard&, Log&);
       void setBoard();
 
   private:
@@ -25,10 +26,12 @@ class PieceGen
 
       int GeneratePiece();
       struct Position GeneratePos();
+      void WriteOnPGLog(string);
 
       list<int> possible_num;
       const static int PERCENT_4S = 10;
       GameBoard* board;
+      Log* logger;
 };
 
 #endif

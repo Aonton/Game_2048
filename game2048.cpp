@@ -4,15 +4,15 @@
 */
 #include "Game2048.h"
 
-Game2048::Game2048(Log& log, bool enableGameLog):board(10,6,2), collDetec(board,score,2048), piece(pieces,board)
+Game2048::Game2048(Log& log):board(10,6,2,log),
+                             collDetec(board,score,2048,log),
+                             piece(pieces,board,log),
+                             score(log),
+                             input(log)
 {
   pieces.push_back(2);
   pieces.push_back(4);
   Game2048::logger = &log;
-  if(enableGameLog)
-  {
-    logger->moduleOn(Game);
-  }
 }
 
 void Game2048::ClearScreen()
@@ -124,6 +124,12 @@ void Game2048::Start()
     {
       Reset();
     }
+  }
+
+  if(!found2048)
+  {
+    cout<< "YOU LOST" << endl;
+    WriteOnGameLog("User LOST!");
   }
 
   cout<< "GAME OVER" << endl;

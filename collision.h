@@ -12,13 +12,14 @@
 #include "position.h"
 #include "score.h"
 #include "KeyPress.h"
+#include "logger.h"
 using namespace std;
 using namespace keyPress;
 
 class Collision
 {
   public:
-    Collision(GameBoard&, Score&, const int);
+    Collision(GameBoard&, Score&, const int, Log&);
 
     bool shiftAll(Keys, bool&);
     bool testShift();
@@ -32,11 +33,14 @@ class Collision
     bool shiftLeft(bool&);
     bool shiftRight(bool&);
 
+    void WriteOnColLog(string);
+
     GameBoard* board;
     GameBoard prevBoard;
     Score* score;
     int prevScore;
     const int end;
+    Log* logger;
 
 };
 

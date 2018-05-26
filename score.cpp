@@ -8,9 +8,10 @@
 #include "score.h"
 using namespace std;
 
-Score::Score()
+Score::Score(Log& log)
 {
   Score::score = 0;
+  Score::logger = &log;
 }
 
 int Score::getScore()
@@ -23,6 +24,11 @@ void Score::addToScore(int points)
   if(points>0)
   {
     score+=points;
+    /*WriteOnScoreLog("Points added to score: " +
+                    to_string(points) +
+                    " | New Score: " +
+                    to_string(score));*/
+   // To do: (shows up twice)
   }
 }
 
@@ -37,4 +43,9 @@ void Score::setScore(int score)
   {
     Score::score = score;
   }
+}
+
+void Score::WriteOnScoreLog(string text)
+{
+  logger->writeToLog(Scor,text);
 }

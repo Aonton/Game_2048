@@ -6,12 +6,13 @@
 #ifndef SCORE_H
 #define SCORE_H
 #include <iostream>
+#include "logger.h"
 using namespace std;
 
 class Score
 {
   public:
-    Score();
+    Score(Log&);
 
     int getScore();
     void setScore(int);
@@ -19,7 +20,10 @@ class Score
     void scoreReset();
 
   private:
+    void WriteOnScoreLog(string);
+
     int score;
+    Log* logger;
 };
 
 #endif

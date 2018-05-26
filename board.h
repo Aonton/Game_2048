@@ -5,12 +5,13 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <iostream>
+#include "logger.h"
 using namespace std;
 
 class GameBoard
 {
   public:
-    GameBoard(int,int,int);
+    GameBoard(int,int,int,Log&);
     GameBoard(GameBoard&);
 
     void PrintBoard();
@@ -32,6 +33,8 @@ class GameBoard
     void PrintSpace();
     void PrintEmptyLine();
 
+    void WriteOnBoardLog(string);
+
     const static int ROW_NUM = 4;
     const static int COL_NUM = 4;
 
@@ -39,6 +42,8 @@ class GameBoard
     int offset;
     int spacesBtw;
     int emptyLineNum;
+
+    Log* logger;
 };
 
 #endif

@@ -17,8 +17,15 @@ using namespace std;
 int main()
 {
   Log log;
-  log.moduleOn(Main);
-  Game2048 game(log,false);
+  // To do how to make this not as big and repettive
+  //log.moduleOn(Main);
+  //log.moduleOn(Game);
+  //log.moduleOn(PG);
+  //log.moduleOn(Board);
+  log.moduleOn(Col);
+  log.moduleOn(Scor);
+  log.moduleOn(Input);
+  Game2048 game(log);
   log.writeToLog(Main,"Game Starting ...");
   game.Start();
   log.writeToLog(Main,"Game Ended");

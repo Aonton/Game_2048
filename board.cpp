@@ -8,7 +8,7 @@
 #include "board.h"
 using namespace std;
 
-GameBoard::GameBoard(int offset, int spacesBtw, int emptyLineNum)
+GameBoard::GameBoard(int offset, int spacesBtw, int emptyLineNum, Log& log)
 {
   for(int row=0; row<GameBoard::ROW_NUM; row++)
   {
@@ -21,6 +21,7 @@ GameBoard::GameBoard(int offset, int spacesBtw, int emptyLineNum)
   GameBoard::offset = offset;
   GameBoard::spacesBtw = spacesBtw;
   GameBoard::emptyLineNum = emptyLineNum;
+  GameBoard::logger = &log;
 }
 
 GameBoard::GameBoard(GameBoard& board)
@@ -128,6 +129,13 @@ void GameBoard::setPiece(int val, int row, int col)
      col>=0)
   {
     board_nums[row][col] = val;
+
+    WriteOnBoardLog("Piece ( " +
+                    to_string(row) +
+                    " , " +
+                    to_string(col) +
+                    " ) set to " +
+                    to_string(val));
   }
 
 }
@@ -260,4 +268,9 @@ void GameBoard::boardReset()
       board_nums[row][col] = 0;
     }
   }
+}
+
+void GameBoard::WriteOnBoardLog(string text)
+{
+  logger->writeToLog(Board,text);
 }

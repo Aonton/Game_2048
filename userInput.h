@@ -11,17 +11,21 @@
 #include <unistd.h>
 #include <stdio.h>
 #include "KeyPress.h"
+#include "logger.h"
 using namespace std;
 using namespace keyPress;
 
 class UserInput
 {
   public:
-    UserInput();
+    UserInput(Log&);
     Keys Input();
 
   private:
     int getch(void);
+    void WriteOnInputLog(string);
+
+    Log* logger;
 };
 
 #endif

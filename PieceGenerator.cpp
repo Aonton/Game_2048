@@ -9,13 +9,15 @@
 #include <iostream>
 #include "PieceGenerator.h"
 using namespace std;
+using namespace module;
 
-PieceGen::PieceGen(list<int> possible_num, GameBoard& board)
+PieceGen::PieceGen(list<int> possible_num, GameBoard& board, Log& log)
 {
   srand(time(NULL));
 
   PieceGen::possible_num = possible_num;
   PieceGen::board = &board;
+  PieceGen::logger = &log;
 }
 
 int PieceGen::GeneratePiece()
@@ -23,16 +25,19 @@ int PieceGen::GeneratePiece()
   const int min = 1;
   const int max = 100;
   int num = (rand() % max) + min;
+  int val = 0;
 
   // TO DO: add different settings
   if(num<=PERCENT_4S)
   {
-    return 4;
+    val = 4;
   }
   else
   {
-    return 2;
+    val = 2;
   }
+
+  return val;
 }
 
 Position PieceGen::GeneratePos()
@@ -57,5 +62,17 @@ void PieceGen::setBoard()
       }while(board->getPiece(pos.row,pos.col)!=0);
 
       board->setPiece(val,pos.row,pos.col);
+
+      WriteOnPGLog("Piece Generated: ( " +
+                   to_string(pos.row) +
+                   " , " +
+                   to_string(pos.col) +
+                   " ) with value of " +
+                   to_string(val));
     }
+}
+
+void PieceGen::WriteOnPGLog(string text)
+{
+  logger->writeToLog(PG,text);
 }

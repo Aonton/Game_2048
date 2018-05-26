@@ -11,11 +11,12 @@
 #include "collision.h"
 using namespace std;
 
-Collision::Collision(GameBoard& board, Score& score, const int end_num): prevBoard(board), end(end_num)
+Collision::Collision(GameBoard& board, Score& score, const int end_num, Log& log): prevBoard(board), end(end_num)
 {
   Collision::board = &board;
   Collision::score = &score;
   Collision::prevScore = 0;
+  Collision::logger = &log;
 }
 
 bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048)
@@ -196,6 +197,7 @@ bool Collision::shiftAll(Keys key, bool& found2048)
     break;
   }
 
+  WriteOnColLog((collision ? " " : "No ") + string("Possible Collision For Input"));
   return collision;
 }
 
@@ -234,4 +236,9 @@ void Collision::UndoCollision()
     *board = prevBoard;
     score->setScore(prevScore);
   }
+}
+
+void Collision::WriteOnColLog(string text)
+{
+  logger->writeToLog(Col,text);
 }

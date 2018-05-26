@@ -23,7 +23,7 @@ using namespace keyPress;
 class Game2048
 {
   public:
-    Game2048(Log&, bool);
+    Game2048(Log&);
     void Start();
 
   private:

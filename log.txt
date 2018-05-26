@@ -1,1 +1,32 @@
-2018-5-24, 22:29:2 - Main: Game Starting ...
+2018-5-25, 23:37:12 - Collision:  Possible Collision For Input
+2018-5-25, 23:37:12 - Collision:  Possible Collision For Input
+2018-5-25, 23:37:12 - Collision:  Possible Collision For Input
+2018-5-25, 23:37:12 - Collision:  Possible Collision For Input
+2018-5-25, 23:37:12 - Collision:  Possible Collision For Input
+2018-5-25, 23:37:13 - Collision:  Possible Collision For Input
+2018-5-25, 23:37:13 - Collision:  Possible Collision For Input
+2018-5-25, 23:37:13 - Collision:  Possible Collision For Input
+2018-5-25, 23:44:13 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:13 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:13 - UserInput: User entered: LEFT
+2018-5-25, 23:44:13 - Collision:  Possible Collision For Input
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: RIGHT
+2018-5-25, 23:44:14 - Collision:  Possible Collision For Input
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: LEFT
+2018-5-25, 23:44:14 - Collision:  Possible Collision For Input
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: RIGHT
+2018-5-25, 23:44:14 - Collision:  Possible Collision For Input
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: LEFT
+2018-5-25, 23:44:14 - Collision:  Possible Collision For Input
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: ? (Not Valid Key Preess)
+2018-5-25, 23:44:14 - UserInput: User entered: RIGHT
+2018-5-25, 23:44:14 - Collision:  Possible Collision For Input
