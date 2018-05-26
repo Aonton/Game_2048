@@ -13,6 +13,8 @@ Game2048::Game2048(Log& log):board(10,6,2,log),
   pieces.push_back(2);
   pieces.push_back(4);
   Game2048::logger = &log;
+  Game2048::showLostMessage = true;
+  Game2048::contGame = true;
 }
 
 void Game2048::ClearScreen()
@@ -23,7 +25,7 @@ void Game2048::ClearScreen()
 void Game2048::DisplayGame()
 {
   DisplayTopMenu();
-  board.PrintBoard();
+  cout<< board;
   DisplayBottomMenu();
 }
 
@@ -72,64 +74,93 @@ void Game2048::SetUpGame()
 
 void Game2048::Start()
 {
-  bool contGame = true;
   bool collision = false;
   bool found2048 = false;
   bool objective2048 = false;
   Keys key = OTHER;
 
   SetUpGame();
+  key = input.Input();
 
-  while(contGame)
+  while(key!=EXIT)
   {
-    key = input.Input();
-    if(key!=RESET)
+    while(contGame || key==REDO)
     {
-      if(key!=REDO)
-      {
-        if(key!=CONT && key!=OTHER)
+        if(key!=EXIT)
         {
-          collision = collDetec.shiftAll(key, found2048);
-
-          if(collision)
+          if(key!=RESET)
           {
-            piece.setBoard();
-            // DO NOT CLEAR SCREEN FIX POSITION
-            // TO DO ADD COLOR
-            //ClearScreen();
-            DisplayGame();
-
-            if(objective2048)
+            if(key!=REDO)
             {
-              contGame = (!found2048) && collDetec.testShift();
+              if(key!=CONT && key!=OTHER)
+              {
+                collision = collDetec.shiftAll(key, found2048);
+
+                if(collision)
+                {
+                  piece.setBoard();
+                  // DO NOT CLEAR SCREEN FIX POSITION
+                  // TO DO ADD COLOR
+                  //ClearScreen();
+                  DisplayGame();
+
+                  if(objective2048)
+                  {
+                    contGame = (!found2048) && collDetec.testShift();
+                  }
+                  else
+                  {
+                    contGame = collDetec.testShift();
+                  }
+
+                  if(objective2048 && found2048)
+                  {
+                    Win(contGame, objective2048);
+                  }
+                }
+              }
             }
             else
             {
-              contGame = collDetec.testShift();
-            }
-
-            if(objective2048 && found2048)
-            {
-              Win(contGame, objective2048);
+              Redo();
+              contGame = true;
             }
           }
+          else
+          {
+            Reset();
+          }
+        }
+        else
+        {
+          break;
+        }
+
+        if(contGame)
+        {
+            key = input.Input();
         }
       }
-      else
-      {
-        Redo();
-      }
-    }
-    else
-    {
-      Reset();
-    }
-  }
 
-  if(!found2048)
-  {
-    cout<< "YOU LOST" << endl;
-    WriteOnGameLog("User LOST!");
+      if(!found2048 && showLostMessage && !contGame)
+      {
+        cout<< "YOU LOST" << endl;
+        WriteOnGameLog("User LOST!");
+        showLostMessage = false;
+      }
+
+      if(key==EXIT)
+      {
+        break;
+      }
+
+      key = input.Input();
+
+      if(key==RESET)
+      {
+        contGame = true;
+        showLostMessage = true;
+      }
   }
 
   cout<< "GAME OVER" << endl;
@@ -162,6 +193,7 @@ void Game2048::Redo()
 {
   collDetec.UndoCollision();
   DisplayGame();
+  showLostMessage = true;
   WriteOnGameLog("Redoing Board ...");
 }
 

@@ -29,96 +29,88 @@ GameBoard::GameBoard(GameBoard& board)
   *this = board;
 }
 
-void GameBoard::PrintOffset()
+void GameBoard::PrintOffset(ostream& out)
 {
   for(int i=0; i<GameBoard::offset; i++)
   {
-    cout<< " ";
+    out<< " ";
   }
 }
 
-void GameBoard::PrintBar()
+void GameBoard::PrintBar(ostream& out)
 {
-  PrintOffset();
+  PrintOffset(out);
   for(int i=0; i<=(16 + ((GameBoard::spacesBtw-1)*12)); i++)
   {
-    cout<< "-";
+    out<< "-";
   }
 
-  cout<< endl;
+  out<< endl;
 }
 
-void GameBoard::PrintSpace()
+void GameBoard::PrintSpace(ostream& out)
 {
     for(int i=0; i<GameBoard::spacesBtw; i++)
     {
-      cout<< " ";
+      out<< " ";
     }
 }
 
-void GameBoard::PrintEmptyLine()
+void GameBoard::PrintEmptyLine(ostream& out)
 {
   for(int i=0; i<GameBoard::emptyLineNum; i++)
   {
-    PrintOffset();
-    cout<< "|";
+    PrintOffset(out);
+    out<< "|";
     for(int j=0; j<GameBoard::COL_NUM; j++)
     {
-      PrintSpace();
-      PrintSpace();
-      PrintSpace();
-      cout<< "|";
+      PrintSpace(out);
+      PrintSpace(out);
+      PrintSpace(out);
+      out<< "|";
     }
 
-    cout<< endl;
+    out<< endl;
   }
 
 }
 
 // Operating overload board and use different stream operator
-void GameBoard::PrintBoard()
+void GameBoard::PrintBoard(ostream& out)
 {
   string str;
   int length = 0;
-  PrintBar();
+  PrintBar(out);
 
   for(int row=0; row<GameBoard::ROW_NUM; row++)
   {
-    PrintEmptyLine();
-    PrintOffset();
-    cout<< "|";
-    PrintSpace();
+    PrintEmptyLine(out);
+    PrintOffset(out);
+    out<< "|";
+    PrintSpace(out);
     for(int col=0; col<GameBoard::COL_NUM; col++)
     {
         if(board_nums[row][col] == 0)
         {
-          PrintSpace();
+          PrintSpace(out);
         }
         else
         {
-          str = to_string(board_nums[row][col]);
-          length = str.length();
-
-          printf ("%*s%*c",
-                  ((GameBoard::spacesBtw - length) >> 1) + length,
-                  str.c_str(),
-                  ((GameBoard::spacesBtw - length) >> 1) + ((GameBoard::spacesBtw - length) & 1),
-                  ' '
-                );
+          out<< centerText(GameBoard::spacesBtw,to_string(board_nums[row][col]));
         }
 
-        PrintSpace();
-        cout<< "|";
-        PrintSpace();
+        PrintSpace(out);
+        out<< "|";
+        PrintSpace(out);
     }
 
-    PrintOffset();
-    cout<< endl;
-    PrintEmptyLine();
-    PrintBar();
+    PrintOffset(out);
+    out<< endl;
+    PrintEmptyLine(out);
+    PrintBar(out);
   }
 
-  cout<< endl;
+  out<< endl;
 }
 
 void GameBoard::setPiece(int val, int row, int col)
@@ -273,4 +265,34 @@ void GameBoard::boardReset()
 void GameBoard::WriteOnBoardLog(string text)
 {
   logger->writeToLog(Board,text);
+}
+
+string GameBoard::centerText(int space, string text)
+{
+  int length = text.length();
+  if(space < length)
+  {
+    return text;
+  }
+
+  int diff = space  - length;
+  int pad1 = diff/2;
+  int pad2 = diff - pad1;
+  return string(pad1,' ') + text + string(pad2,' ');
+}
+
+ostream& operator<<(ostream& cin, GameBoard& board)
+{
+    board.PrintBoard(cin);
+    if(board.logger->getModuleStat(Board))
+    {
+      board.logger->getFileStream() << board;
+    }
+    return cin;
+ }
+
+ofstream& operator<<(ofstream& myfile, GameBoard& board)
+{
+     board.PrintBoard(myfile);
+     return myfile;
 }

@@ -24,11 +24,10 @@ void Score::addToScore(int points)
   if(points>0)
   {
     score+=points;
-    /*WriteOnScoreLog("Points added to score: " +
+    WriteOnScoreLog("Points added to score: " +
                     to_string(points) +
                     " | New Score: " +
-                    to_string(score));*/
-   // To do: (shows up twice)
+                    to_string(score));
   }
 }
 

@@ -5,6 +5,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <iostream>
+#include <fstream>
 #include "logger.h"
 using namespace std;
 
@@ -14,7 +15,7 @@ class GameBoard
     GameBoard(int,int,int,Log&);
     GameBoard(GameBoard&);
 
-    void PrintBoard();
+    void PrintBoard(ostream&);
     void setPiece(int,int,int);
     int getRowSize();
     int getColSize();
@@ -26,14 +27,17 @@ class GameBoard
     bool operator == (GameBoard&);
     bool operator != (GameBoard&);
     void operator = (GameBoard&);
+    friend ostream& operator<< (ostream&, GameBoard&);
+    friend ofstream& operator<< (ofstream&, GameBoard&);
 
   private:
-    void PrintBar();
-    void PrintOffset();
-    void PrintSpace();
-    void PrintEmptyLine();
+    void PrintBar(ostream&);
+    void PrintOffset(ostream&);
+    void PrintSpace(ostream&);
+    void PrintEmptyLine(ostream&);
 
     void WriteOnBoardLog(string);
+    string centerText(int,string);
 
     const static int ROW_NUM = 4;
     const static int COL_NUM = 4;

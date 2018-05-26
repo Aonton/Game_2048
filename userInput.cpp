@@ -44,14 +44,13 @@ Keys UserInput::Input()
           break;
       case EXIT:
           WriteOnInputLog(statement + "EXIT");
-          cout<< "GAME OVER" << endl;
-          exit(1);
+          break;
       case CONT:
           WriteOnInputLog(statement + "CONT");
         break;
       default:
-          // TO DO: multi invalid keys
-          WriteOnInputLog(statement + "? (Not Valid Key Preess)");
+          // Invalid key presses are fine (they are handled here)
+          WriteOnInputLog(statement + "? (Not Valid Key Press)");
           return OTHER;
           break;
     }
@@ -74,6 +73,5 @@ int UserInput::getch(void)
 
 void UserInput::WriteOnInputLog(string text)
 {
-  // To do: think about the namespace
   logger->writeToLog(module::Input,text);
 }

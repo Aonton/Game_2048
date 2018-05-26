@@ -15,7 +15,8 @@ namespace module
     Game,
     Main,
     Scor,
-    Input
+    Input,
+    Logger,
   } Module;
 }
 

@@ -46,7 +46,7 @@ bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048)
           future_pos.col++;
         break;
         default:
-          cout<< "Collision::NewPosition - ERROR: INCORRECT KEY!" << endl;
+          WriteOnColLog("Error: Invalid Key");
         break;
       }
 
@@ -193,7 +193,7 @@ bool Collision::shiftAll(Keys key, bool& found2048)
       collision = shiftRight(found2048);
     break;
     default:
-      // empty
+      WriteOnColLog("Invalid key movement");
     break;
   }
 
@@ -203,29 +203,47 @@ bool Collision::shiftAll(Keys key, bool& found2048)
 
 bool Collision::testShift()
 {
+
+  bool scorPrev = logger->getModuleStat(Scor);
+  bool pGPrev = logger->getModuleStat(PG);
+  bool boardPrev = logger->getModuleStat(Board);
+
+  logger->moduleOff(Scor);
+  logger->moduleOff(PG);
+  logger->moduleOff(Board);
+
   bool found2048;
-  prevBoard = *board;
-  prevScore = score->getScore();
+  GameBoard temp(*board);
+  int tempScore = score->getScore();
 
   if(!shiftUp(found2048))
   {
-    UndoCollision();
+    *board = temp;
+    score->setScore(tempScore);
     if(!shiftDown(found2048))
     {
-      UndoCollision();
+      *board = temp;
+      score->setScore(tempScore);
       if(!shiftLeft(found2048))
       {
-        UndoCollision();
+        *board = temp;
+        score->setScore(tempScore);
         if(!shiftRight(found2048))
         {
-          UndoCollision();
+          *board = temp;
+          score->setScore(tempScore);
           return false;
         }
       }
     }
   }
 
-  UndoCollision();
+  *board = temp;
+  score->setScore(tempScore);
+
+  logger->setModule(Scor,scorPrev);
+  logger->setModule(PG,pGPrev);
+  logger->setModule(Board,boardPrev);
   return true;
 }
 

@@ -45,6 +45,8 @@ class Game2048
     PieceGen piece;
     UserInput input;
     Log* logger;
+    bool showLostMessage;
+    bool contGame;
 
     static const int end = 2048;
 };
