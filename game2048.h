@@ -33,7 +33,7 @@ class Game2048
     void DisplayGame();
     void TimerToCont();
     void SetUpGame();
-    void Win(bool&, bool&);
+    void Win(bool&, bool&, int&);
     void Redo();
     void Reset();
     void WriteOnGameLog(string);

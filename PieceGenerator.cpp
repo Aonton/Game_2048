@@ -34,7 +34,7 @@ int PieceGen::GeneratePiece()
   }
   else
   {
-    val = 1024;
+    val = 2;
   }
 
   return val;

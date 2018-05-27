@@ -116,12 +116,6 @@ void Game2048::Start()
                   {
                     contGame = collDetec.testShift();
                   }
-
-                  if(objective2048 && found2048)
-                  {
-                    WriteOnGameLog("hello");
-                    Win(contGame, objective2048);
-                  }
                 }
               }
             }
@@ -161,7 +155,14 @@ void Game2048::Start()
         break;
       }
 
-      key = input.Input();
+      if(objective2048 && found2048)
+      {
+        Win(contGame, objective2048, key);
+      }
+      else
+      {
+        key = input.Input();
+      }
 
       if(key==(int)'r')
       {
@@ -182,9 +183,8 @@ void Game2048::TimerToCont()
   printf("Time elapsed: %f\n", ((double)clock() - start) / CLOCKS_PER_SEC);
 }
 
-void Game2048::Win(bool& contGame, bool& objective2048)
+void Game2048::Win(bool& contGame, bool& objective2048, int& key)
 {
-  int key;
   // TO DO: Make center
   mvprintw(0,0,"YOU WIN\n");
   WriteOnGameLog("User Won!\n");
@@ -193,12 +193,14 @@ void Game2048::Win(bool& contGame, bool& objective2048)
   key = input.Input();
   if(key==(int)'c')
   {
+    WriteOnGameLog("Continuing game after 2048 goal\n");
     contGame = true;
     objective2048 = false;
-    WriteOnGameLog("Continuing game after 2048 goal\n");
+    DisplayGame();
   }
   else
   {
+    key = (int)'e';
     WriteOnGameLog("Did not continuing game after 2048 goal\n");
   }
 }
