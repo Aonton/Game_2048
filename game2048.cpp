@@ -15,15 +15,19 @@ Game2048::Game2048(Log& log):board(10,6,2,log),
   Game2048::logger = &log;
   Game2048::showLostMessage = true;
   Game2048::contGame = true;
+  initscr();
+  cbreak();
+  keypad(stdscr, TRUE);
 }
 
-void Game2048::ClearScreen()
+void Game2048::End()
 {
-  cout << string( 100, '\n' );
+  endwin();
 }
 
 void Game2048::DisplayGame()
 {
+  move(0,0);
   DisplayTopMenu();
   cout<< board;
   DisplayBottomMenu();
@@ -31,12 +35,12 @@ void Game2048::DisplayGame()
 
 void Game2048::DisplayTopMenu()
 {
-  cout<< "*************************************************************************************************" << endl;
-  cout<< "*            *             *           *****          *            *             *              *" << endl;
-  cout<< "*  REDO (R)  *  RESET (S)  *  EXIT(E)  *****  UP (^)  *  DOWN (v)  *  LEFT (<-)  *  RIGHT (->)  *" << endl;
-  cout<< "*            *             *           *****          *            *             *              *" << endl;
-  cout<< "*************************************************************************************************" << endl;
-  cout<< endl;
+  printw("*************************************************************************************************\n");
+  printw("*            *             *           *****          *            *             *              *\n");
+  printw("*  REDO (R)  *  RESET (S)  *  EXIT(E)  *****  UP (^)  *  DOWN (v)  *  LEFT (<-)  *  RIGHT (->)  *\n");
+  printw("*            *             *           *****          *            *             *              *\n");
+  printw("*************************************************************************************************\n");
+  printw("\n");
 
 }
 
@@ -48,21 +52,21 @@ void Game2048::DisplayBottomMenu()
   string str = to_string(score.getScore());
   int length = str.length();
 
-  cout<< "*************************************************************************************************" << endl;
-  cout<< "*              SCORE              *                                                             *" << endl;
-  cout<< "*                                 *                                                             *" << endl;
-  cout<< "*";
+  printw("*************************************************************************************************\n");
+  printw("*              SCORE              *                                                             *\n");
+  printw("*                                 *                                                             *\n");
+  printw("*");
 
-  printf ("%*s%*c",
+  printw("%*s%*c",
           ((space - length) >> 1) + length,
           str.c_str(),
           ((space - length) >> 1) + ((space - length) & 1),
           ' '
         );
-  cout<< "*                                                             *" << endl;
-  cout<< "*                                 *                                                             *" << endl;
-  cout<< "*************************************************************************************************" << endl;
-  cout<< endl;
+  printw("*                                                             *\n");
+  printw("*                                 *                                                             *\n");
+  printw("*************************************************************************************************\n");
+  printw("\n");
 }
 
 void Game2048::SetUpGame()
@@ -76,32 +80,32 @@ void Game2048::Start()
 {
   bool collision = false;
   bool found2048 = false;
-  bool objective2048 = false;
-  Keys key = OTHER;
+  bool objective2048 = true;
+  int key = -1;
+  int row,col;
 
   SetUpGame();
   key = input.Input();
 
-  while(key!=EXIT)
+  while(key!=(int)'e')
   {
-    while(contGame || key==REDO)
+    while(contGame || key==(int)'r')
     {
-        if(key!=EXIT)
+        if(key!=(int)'e')
         {
-          if(key!=RESET)
+          if(key!=(int)'s')
           {
-            if(key!=REDO)
+            if(key!=(int)'r')
             {
-              if(key!=CONT && key!=OTHER)
+              if(key!=(int)'c' && key!=-1)
               {
                 collision = collDetec.shiftAll(key, found2048);
+                WriteOnGameLog(string("Found2048 Result: ") +  ((found2048) ? "True" : "False") + "\n");
 
                 if(collision)
                 {
                   piece.setBoard();
-                  // DO NOT CLEAR SCREEN FIX POSITION
                   // TO DO ADD COLOR
-                  //ClearScreen();
                   DisplayGame();
 
                   if(objective2048)
@@ -115,6 +119,7 @@ void Game2048::Start()
 
                   if(objective2048 && found2048)
                   {
+                    WriteOnGameLog("hello");
                     Win(contGame, objective2048);
                   }
                 }
@@ -144,26 +149,30 @@ void Game2048::Start()
 
       if(!found2048 && showLostMessage && !contGame)
       {
-        cout<< "YOU LOST" << endl;
-        WriteOnGameLog("User LOST!");
+        getmaxyx(stdscr,row,col);
+        mvprintw(row/2,(col-strlen(getLostMessage().c_str()))/2,"%s",getLostMessage().c_str());
+        refresh();
+        WriteOnGameLog("User LOST!\n");
         showLostMessage = false;
       }
 
-      if(key==EXIT)
+      if(key==(int)'e')
       {
         break;
       }
 
       key = input.Input();
 
-      if(key==RESET)
+      if(key==(int)'r')
       {
         contGame = true;
         showLostMessage = true;
       }
   }
 
-  cout<< "GAME OVER" << endl;
+  /*getmaxyx(stdscr,row,col);
+  mvprintw(row/2,(col-strlen(getGameOverMessage().c_str()))/2,"%s",getGameOverMessage().c_str());
+  refresh();*/
 }
 
 // TO DO: Needs multi-threading - might need timer class
@@ -175,17 +184,22 @@ void Game2048::TimerToCont()
 
 void Game2048::Win(bool& contGame, bool& objective2048)
 {
-  Keys key;
-  cout<< "YOU WIN" << endl;
-  WriteOnGameLog("User Won!");
+  int key;
+  // TO DO: Make center
+  mvprintw(0,0,"YOU WIN\n");
+  WriteOnGameLog("User Won!\n");
   // add timer for press?
-  cout<< "Press (SHIFT + C) to continue" << endl;
+  printw("Press (c) to continue\n");
   key = input.Input();
-  if(key==CONT)
+  if(key==(int)'c')
   {
     contGame = true;
     objective2048 = false;
-    WriteOnGameLog("Continuing game after 2048 goal");
+    WriteOnGameLog("Continuing game after 2048 goal\n");
+  }
+  else
+  {
+    WriteOnGameLog("Did not continuing game after 2048 goal\n");
   }
 }
 
@@ -194,7 +208,7 @@ void Game2048::Redo()
   collDetec.UndoCollision();
   DisplayGame();
   showLostMessage = true;
-  WriteOnGameLog("Redoing Board ...");
+  WriteOnGameLog("Redoing Board ...\n");
 }
 
 void Game2048::Reset()
@@ -204,10 +218,20 @@ void Game2048::Reset()
   piece.setBoard();
   piece.setBoard();
   DisplayGame();
-  WriteOnGameLog("Resetting Board ...");
+  WriteOnGameLog("Resetting Board ...\n");
 }
 
 void Game2048::WriteOnGameLog(string text)
 {
   logger->writeToLog(Game,text);
+}
+
+// Not printing write - need to add flex
+string Game2048::getLostMessage()
+{
+  return (string("***************************\n") +
+          string("*                         *\n") +
+          string("*         YOU LOST        *\n") +
+          string("*                         *\n") +
+          string("***************************\n"));
 }

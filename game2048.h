@@ -14,17 +14,17 @@
 #include "PieceGenerator.h"
 #include "collision.h"
 #include "score.h"
-#include "keyPress.h"
 #include "logger.h"
 #include "LogModule.h"
+#include <ncurses.h>
 using namespace std;
-using namespace keyPress;
 
 class Game2048
 {
   public:
     Game2048(Log&);
     void Start();
+    void End();
 
   private:
     void ClearScreen();
@@ -37,6 +37,8 @@ class Game2048
     void Redo();
     void Reset();
     void WriteOnGameLog(string);
+
+    string getLostMessage();
 
     list<int> pieces;
     GameBoard board;

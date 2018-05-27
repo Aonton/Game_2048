@@ -17,6 +17,9 @@ using namespace std;
 // Create Log File
 // Only works for MAC OSX - TO DO: Make Windows Verison
 
+// Optimize to print board
+string getGameOverMessage();
+
 int main()
 {
   Log log;
@@ -25,8 +28,19 @@ int main()
   //mods.push_back(Main);
   //mods.push_back(Game);
   Game2048 game(log);
-  log.writeToLog(Main,"Game Starting ...");
+  log.writeToLog(Main,"Game Starting ...\n");
   game.Start();
-  log.writeToLog(Main,"Game Ended");
+  game.End();
+  cout<< getGameOverMessage() << endl;
+  log.writeToLog(Main,"Game Ended\n");
   log.allModuleOff();
+}
+
+string getGameOverMessage()
+{
+  return (string("***************************\n") +
+          string("*                         *\n") +
+          string("*         GAME OVER       *\n") +
+          string("*                         *\n") +
+          string("***************************\n"));
 }

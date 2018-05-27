@@ -8,25 +8,24 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 #include <iostream>
+#include <ncurses.h>
 #include "board.h"
 #include "position.h"
 #include "score.h"
-#include "KeyPress.h"
 #include "logger.h"
 using namespace std;
-using namespace keyPress;
 
 class Collision
 {
   public:
     Collision(GameBoard&, Score&, const int, Log&);
 
-    bool shiftAll(Keys, bool&);
+    bool shiftAll(int, bool&);
     bool testShift();
     void UndoCollision();
 
   private:
-    bool NewPosition(struct Position, Keys, bool&);
+    bool NewPosition(struct Position, int, bool&);
 
     bool shiftUp(bool&);
     bool shiftDown(bool&);

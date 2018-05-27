@@ -34,7 +34,7 @@ int PieceGen::GeneratePiece()
   }
   else
   {
-    val = 2;
+    val = 1024;
   }
 
   return val;
@@ -68,7 +68,8 @@ void PieceGen::setBoard()
                    " , " +
                    to_string(pos.col) +
                    " ) with value of " +
-                   to_string(val));
+                   to_string(val) +
+                   "\n");
     }
 }
 

@@ -1,1 +1,1 @@
-userInput.o: userInput.cpp userInput.h KeyPress.h logger.h LogModule.h
+userInput.o: userInput.cpp userInput.h logger.h LogModule.h

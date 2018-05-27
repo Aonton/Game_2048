@@ -27,7 +27,8 @@ void Score::addToScore(int points)
     WriteOnScoreLog("Points added to score: " +
                     to_string(points) +
                     " | New Score: " +
-                    to_string(score));
+                    to_string(score) +
+                    "\n");
   }
 }
 

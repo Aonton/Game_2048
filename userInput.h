@@ -10,19 +10,18 @@
 #include <termios.h>
 #include <unistd.h>
 #include <stdio.h>
-#include "KeyPress.h"
+#include <ncurses.h>
 #include "logger.h"
 using namespace std;
-using namespace keyPress;
 
 class UserInput
 {
   public:
     UserInput(Log&);
-    Keys Input();
+    int Input();
 
   private:
-    int getch(void);
+    //int getch(void);
     void WriteOnInputLog(string);
 
     Log* logger;

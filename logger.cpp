@@ -29,16 +29,16 @@ Log::~Log()
 void Log::moduleOn(Module mod)
 {
   logList[mod] = true;
-  WriteToLog(getModName(mod) + " enabled");
+  WriteToLog(getModName(mod) + " enabled\n");
 }
 
 void Log::moduleOff(Module mod)
 {
   logList[mod] = false;
-  WriteToLog(getModName(mod) + " disabled");
+  WriteToLog(getModName(mod) + " disabled\n");
 }
 
-void Log::writeToLog(Module mod, string text)
+void Log::writeToLog(Module mod, string text, bool date)
 {
   if (logList.find(mod) != logList.end())
   {
@@ -46,18 +46,21 @@ void Log::writeToLog(Module mod, string text)
     {
       const time_t curTime = time(0);
       struct tm * now = localtime(&curTime);
-      //myfile << asctime(localtime(&curTime)) << " - ";
-      myfile << (now->tm_year + 1900) << '-'
-             << (now->tm_mon + 1) << '-'
-             <<  now->tm_mday << ", "
-             << now->tm_hour << ":"
-             << now->tm_min << ":"
-             << now->tm_sec
-             << " - "
-             << getModName(mod)
-             << ": "
-             << text
-             << endl;
+
+      if(date)
+      {
+        myfile << (now->tm_year + 1900) << '-'
+               << (now->tm_mon + 1) << '-'
+               <<  now->tm_mday << ", "
+               << now->tm_hour << ":"
+               << now->tm_min << ":"
+               << now->tm_sec
+               << " - "
+               << getModName(mod)
+               << ": ";
+      }
+
+      myfile << text;
     }
   }
 }
@@ -66,14 +69,14 @@ void Log::flipState(Module mod)
 {
   logList[mod] = !logList[mod];
   WriteToLog(getModName(mod) +
-             (logList[mod] ? " enabled" : " disabled"));
+             (logList[mod] ? " enabled\n" : " disabled\n"));
 }
 
 void Log::setModule(Module mod, bool enable)
 {
   logList[mod] = enable;
   WriteToLog(getModName(mod) +
-             (logList[mod] ? " enabled" : " disabled"));
+             (logList[mod] ? " enabled\n" : " disabled\n"));
 }
 
 void Log::WriteToLog(string text)
@@ -128,7 +131,7 @@ void Log::allModuleOff()
         logList[it->first] = false;
     }
 
-    WriteToLog("All logs disabled");
+    WriteToLog("All logs disabled\n");
 }
 
 void Log::allModuleOn()
@@ -140,7 +143,7 @@ void Log::allModuleOn()
       logList[it->first] = true;
   }
 
-  WriteToLog("All logs enabled");
+  WriteToLog("All logs enabled\n");
 }
 
 void Log::someModuleOff(list<Module> mods)
@@ -180,7 +183,7 @@ void Log::setSomeModules(map<Module, bool> setModule)
   {
       logList[it->first] = it->second;
       WriteToLog(getModName(it->first) +
-                 (it->second ? " enabled" : " disabled"));
+                 (it->second ? " enabled\n" : " disabled\n"));
   }
 }
 

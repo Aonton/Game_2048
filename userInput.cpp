@@ -13,62 +13,47 @@ UserInput::UserInput(Log& log)
   UserInput::logger = &log;
 }
 
-Keys UserInput::Input()
+int UserInput::Input()
 {
-  int input = 0;
+  int key = 0;
 
-  input = 0;
-  input = getch();
-  Keys key = static_cast<Keys>(input);
+  key = getch();
   string statement = "User entered: ";
 
   switch(key)
   {
       case KEY_UP:
-          WriteOnInputLog(statement + "UP");
+          WriteOnInputLog(statement + "UP\n");
           break;
       case KEY_DOWN:
-          WriteOnInputLog(statement + "DOWN");
+          WriteOnInputLog(statement + "DOWN\n");
           break;
       case KEY_LEFT:
-          WriteOnInputLog(statement + "LEFT");
+          WriteOnInputLog(statement + "LEFT\n");
           break;
       case KEY_RIGHT:
-          WriteOnInputLog(statement + "RIGHT");
+          WriteOnInputLog(statement + "RIGHT\n");
           break;
-      case REDO:
-          WriteOnInputLog(statement + "REDO");
+      case (int)'r':
+          WriteOnInputLog(statement + "REDO\n");
           break;
-      case RESET:
-          WriteOnInputLog(statement + "RESET");
+      case (int)'s':
+          WriteOnInputLog(statement + "RESET\n");
           break;
-      case EXIT:
-          WriteOnInputLog(statement + "EXIT");
+      case (int)'e':
+          WriteOnInputLog(statement + "EXIT\n");
           break;
-      case CONT:
-          WriteOnInputLog(statement + "CONT");
+      case (int)'c':
+          WriteOnInputLog(statement + "CONT\n");
         break;
       default:
           // Invalid key presses are fine (they are handled here)
-          WriteOnInputLog(statement + "? (Not Valid Key Press)");
-          return OTHER;
+          WriteOnInputLog(statement + " " + to_string(key) +  " (Not Valid Key Press)\n");
+          return -1;
           break;
     }
 
     return key;
-}
-
-int UserInput::getch(void)
-{
-    struct termios oldattr, newattr;
-    int ch;
-    tcgetattr( STDIN_FILENO, &oldattr );
-    newattr = oldattr;
-    newattr.c_lflag &= ~( ICANON | ECHO );
-    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
-    ch = getchar();
-    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
-    return ch;
 }
 
 void UserInput::WriteOnInputLog(string text)

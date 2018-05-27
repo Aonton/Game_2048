@@ -19,7 +19,7 @@ Collision::Collision(GameBoard& board, Score& score, const int end_num, Log& log
   Collision::logger = &log;
 }
 
-bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048)
+bool Collision::NewPosition(struct Position pos, int key, bool& found2048)
 {
   struct Position future_pos = pos;
   list<int> combineMarker;
@@ -46,7 +46,7 @@ bool Collision::NewPosition(struct Position pos, Keys key, bool& found2048)
           future_pos.col++;
         break;
         default:
-          WriteOnColLog("Error: Invalid Key");
+          WriteOnColLog("Error: Invalid Key\n");
         break;
       }
 
@@ -172,7 +172,7 @@ bool Collision::shiftLeft(bool& found2048)
   return collision;
 }
 
-bool Collision::shiftAll(Keys key, bool& found2048)
+bool Collision::shiftAll(int key, bool& found2048)
 {
   bool collision = false;
   prevBoard = *board;
@@ -193,11 +193,11 @@ bool Collision::shiftAll(Keys key, bool& found2048)
       collision = shiftRight(found2048);
     break;
     default:
-      WriteOnColLog("Invalid key movement");
+      WriteOnColLog("Invalid key movement\n");
     break;
   }
 
-  WriteOnColLog((collision ? " " : "No ") + string("Possible Collision For Input"));
+  WriteOnColLog((collision ? " " : "No ") + string("Possible Collision For Input\n"));
   return collision;
 }
 
