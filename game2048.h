@@ -9,6 +9,7 @@
 #include <list>
 #include <cstdio>
 #include <ctime>
+#include <ncurses.h>
 #include "board.h"
 #include "userInput.h"
 #include "PieceGenerator.h"
@@ -16,7 +17,6 @@
 #include "score.h"
 #include "logger.h"
 #include "LogModule.h"
-#include <ncurses.h>
 using namespace std;
 
 class Game2048

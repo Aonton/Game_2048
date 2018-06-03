@@ -280,6 +280,8 @@ void GameBoard::WriteOnBoardLog(string text, bool date)
   logger->writeToLog(Board,text,date);
 }
 
+// To do: Don't repeat centering in main and menu
+// One display class
 string GameBoard::centerText(int space, string text)
 {
   int length = text.length();

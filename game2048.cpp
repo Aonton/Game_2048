@@ -17,6 +17,8 @@ Game2048::Game2048(Log& log):board(10,6,2,log),
   Game2048::contGame = true;
   initscr();
   cbreak();
+  start_color();
+  noecho();
   keypad(stdscr, TRUE);
 }
 
@@ -53,8 +55,8 @@ void Game2048::DisplayBottomMenu()
   int length = str.length();
 
   printw("*************************************************************************************************\n");
-  printw("*              SCORE              *                                                             *\n");
-  printw("*                                 *                                                             *\n");
+  printw("*                                 *                       *                                     *\n");
+  printw("*              SCORE              *      OPTIONS (O)      *                                     *\n");
   printw("*");
 
   printw("%*s%*c",
@@ -63,8 +65,8 @@ void Game2048::DisplayBottomMenu()
           ((space - length) >> 1) + ((space - length) & 1),
           ' '
         );
-  printw("*                                                             *\n");
-  printw("*                                 *                                                             *\n");
+  printw("*                       *                                     *\n");
+  printw("*                                 *                       *                                     *\n");
   printw("*************************************************************************************************\n");
   printw("\n");
 }
@@ -164,7 +166,7 @@ void Game2048::Start()
         key = input.Input();
       }
 
-      if(key==(int)'r')
+      if((key==(int)'r') || (key==(int)'s'))
       {
         contGame = true;
         showLostMessage = true;

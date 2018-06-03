@@ -6,9 +6,11 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <fstream>
 #include "logger.h"
 #include "LogModule.h"
 #include "game2048.h"
+#include "Menu.h"
 using namespace std;
 
 // Sockets?
@@ -18,15 +20,18 @@ using namespace std;
 // Only works for MAC OSX - TO DO: Make Windows Verison
 
 // Optimize to print board
+// Make sure screen is big enough
+// Make center display class
+// Move all long string displays files
 string getGameOverMessage();
 
 int main()
 {
   Log log;
   log.allModuleOn();
-  //list<Module> mods;
-  //mods.push_back(Main);
-  //mods.push_back(Game);
+  log.DisplayDebug();
+  Menu menu(log);
+  menu.DisplayMenu();
   Game2048 game(log);
   log.writeToLog(Main,"Game Starting ...\n");
   game.Start();
@@ -34,6 +39,7 @@ int main()
   cout<< getGameOverMessage() << endl;
   log.writeToLog(Main,"Game Ended\n");
   log.allModuleOff();
+  //cout << "\e[8;50;100t";
 }
 
 string getGameOverMessage()

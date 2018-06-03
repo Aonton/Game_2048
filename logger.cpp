@@ -4,6 +4,7 @@
 */
 
 #include <iostream>
+#include <ncurses.h>
 #include "logger.h"
 using namespace std;
 
@@ -18,6 +19,7 @@ Log::Log()
   logList.insert(make_pair(Main,false));
   logList.insert(make_pair(Scor,false));
   logList.insert(make_pair(Input,false));
+  logList.insert(make_pair(Men,false));
   logList.insert(make_pair(Logger,false));
 }
 
@@ -111,11 +113,14 @@ string Log::getModName(Module mod)
     case Input:
       modName = "UserInput";
       break;
+    case Men:
+      modName = "Menu";
+      break;
     case Logger:
       modName = "Logger";
       break;
     default:
-      WriteToLog("Error: No Logger Module Name for this input");
+      WriteToLog("Error: No Logger Module Name for this input\n");
     break;
   }
 
@@ -195,4 +200,115 @@ bool Log::getModuleStat(Module mod)
 ofstream& Log::getFileStream()
 {
   return myfile;
+}
+
+void Log::DisplayDebug()
+{
+  initscr();
+  cbreak();
+  start_color();
+  noecho();
+  const int debugLeft = 20;
+  const int debugTop = 2;
+  int key = 0;
+
+  map<Module, bool>::iterator it;
+  WINDOW* win = newwin(20,20,0,0);
+  attron(A_BOLD | A_UNDERLINE);
+  printw("DEBUG MENU\n\n");
+  attroff(A_BOLD | A_UNDERLINE);
+
+  for ( it = logList.begin(); it != logList.end(); it++ )
+  {
+    printw("%-*s", debugLeft, getModName(it->first).c_str());
+
+    printDebugVal(it->first);
+  }
+  printw("Enter (b) to go back");
+  move(debugTop,debugLeft);
+
+  while(key!=int('b'))
+  {
+    key = InputDebug(debugTop,debugLeft);
+  }
+  endwin();
+}
+
+int Log::InputDebug(int debugTop, int debugLeft)
+{
+  keypad(stdscr, TRUE);
+  int key = 0;
+  key = getch();
+  int x = 0;
+  int y = 0;
+  const int spaceOpt = 6;
+
+  getyx(stdscr,y,x);
+
+  switch(key)
+  {
+    case KEY_UP:
+      if(debugTop!=y)
+      {
+        move(y-debugTop,x);
+      }
+      break;
+    case KEY_DOWN:
+      if((debugTop*logList.size()!=y))
+      {
+        move(y+debugTop,x);
+      }
+      break;
+    case KEY_LEFT:
+      if(debugLeft!=x)
+      {
+        move(y,x-spaceOpt);
+      }
+      break;
+    case KEY_RIGHT:
+      if(debugLeft+spaceOpt!=x)
+      {
+        move(y,x+spaceOpt);
+      }
+      break;
+    // 10 is the ENTER key
+    case 10:
+      if((logList[static_cast<Module>((y/2)-1)] && x!=debugLeft) ||
+         (!logList[static_cast<Module>((y/2)-1)] && x!=debugLeft+spaceOpt))
+      {
+        flipState(static_cast<Module>((y/2)-1));
+
+        move(y,debugLeft);
+        printDebugVal(static_cast<Module>((y/2)-1));
+        move(y,x);
+      }
+    break;
+    case (int)'b':
+      WriteToLog("Ending Debug Menu\n");
+    break;
+    default:
+      WriteToLog("INVALID DEBUG INPUT\n");
+  };
+
+  return key;
+}
+
+void Log::printDebugVal(Module mod)
+{
+  if(logList[mod])
+  {
+    attron(A_STANDOUT);
+  }
+
+  printw("YES");
+  attroff(A_STANDOUT);
+  printw(" : ");
+
+  if(!(logList[mod]))
+  {
+    attron(A_STANDOUT);
+  }
+
+  printw("NO\n\n");
+  attroff(A_STANDOUT);
 }

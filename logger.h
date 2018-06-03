@@ -10,6 +10,7 @@
 #include <fstream>
 #include <ctime>
 #include <list>
+
 #include "LogModule.h"
 
 using namespace std;
@@ -42,9 +43,13 @@ class Log
     bool getModuleStat(Module);
     ofstream& getFileStream();
 
+    void DisplayDebug();
+
   private:
     void WriteToLog(string);
     string getModName(Module);
+    int InputDebug(int,int);
+    void printDebugVal(Module);
 
     map<Module, bool> logList;
     ofstream myfile;
