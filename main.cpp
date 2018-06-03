@@ -39,7 +39,6 @@ int main()
   cout<< getGameOverMessage() << endl;
   log.writeToLog(Main,"Game Ended\n");
   log.allModuleOff();
-  //cout << "\e[8;50;100t";
 }
 
 string getGameOverMessage()

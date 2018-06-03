@@ -21,6 +21,7 @@ Log::Log()
   logList.insert(make_pair(Input,false));
   logList.insert(make_pair(Men,false));
   logList.insert(make_pair(Logger,false));
+  logList.insert(make_pair(Dis,false));
 }
 
 Log::~Log()
@@ -118,6 +119,9 @@ string Log::getModName(Module mod)
       break;
     case Logger:
       modName = "Logger";
+      break;
+    case Dis:
+      modName = "Display";
       break;
     default:
       WriteToLog("Error: No Logger Module Name for this input\n");

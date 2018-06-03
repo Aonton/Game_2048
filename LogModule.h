@@ -17,6 +17,7 @@ namespace module
     Scor,
     Input,
     Men,
+    Dis,
     Logger,
   } Module;
 }

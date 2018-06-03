@@ -6,6 +6,7 @@
    5/28/2018
 */
 
+// To Do: JSON OR CSV
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 #include<iostream>
@@ -18,9 +19,16 @@ class Configuration
     void DisplayMidGameOptions();
     void DisplayBeginGameOptions();
   private:
-    int numRows;
-    int numCols;
+    int boardRows;
+    int boardCols;
     string sizeOpt;
+
+    int scrlen;
+    int scrwid;
+    int scrmax_len;
+    int scrmax_wid;
+    int scrmin_len;
+    int scrmin_wid;
 
 };
 #endif
