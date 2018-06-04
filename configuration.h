@@ -16,8 +16,7 @@ class Configuration
 {
   public:
     Configuration();
-    void DisplayMidGameOptions();
-    void DisplayBeginGameOptions();
+
   private:
     int boardRows;
     int boardCols;

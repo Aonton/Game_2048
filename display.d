@@ -1,1 +1,1 @@
-display.o: display.cpp display.h logger.h LogModule.h
+display.o: display.cpp display.h logger.h LogModule.h position.h

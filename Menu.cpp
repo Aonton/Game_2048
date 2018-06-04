@@ -9,38 +9,19 @@
 #include "Menu.h"
 using namespace std;
 
-Menu::Menu(Log& log)
+Menu::Menu(Log& log, Display& display)
 {
   Menu::logger = &log;
-  initscr();
-  cbreak();
-  start_color();
-  noecho();
-  /*scrollok(stdscr,true);
-  idlok(stdscr,true);*/
-  keypad(stdscr, true);
+  Menu::display = &display;
 }
 
-void Menu::DisplayMenu()
+void Menu::setMenu()
 {
-  WINDOW* win = newwin(20,20,0,0);
-  //wclear(win);
-  //wrefresh(win);
   int x, y;
 
-  // TO DO REMOVE (hardcord)
-  // TO DO FIX ERROR
-  // Combine fines
-  mvprintw(0,0,"%s",getWelcomeMessage().c_str());
-  //getyx(stdscr,y,x);
-  printw("%s",getGame2048Icon().c_str());
-
-  printw("%s\n\n",getMenuPageDisplay().c_str());
-  //printw("%d %d", x, y);
-  //move(17,37);
-  //mvprintw(17,37,"%s\n\n",getTetrisIcon().c_str());
-  getch();
-  endwin();
+  display->setScreenWithStrAtPos(0,0,getWelcomeMessage());
+  display->setScreenWithStr(getGame2048Icon());
+  display->setScreenWithStr(getMenuPageDisplay());
 }
 
 string Menu::CenterText(string text)

@@ -8,16 +8,16 @@
 #ifndef MENU_H
 #define MENU_H
 #include <iostream>
-#include <ncurses.h>
 #include <fstream>
 #include "logger.h"
+#include "display.h"
 using namespace std;
 
 class Menu
 {
   public:
-    Menu(Log&);
-    void DisplayMenu();
+    Menu(Log&, Display&);
+    void setMenu();
   private:
     string CenterText(string);
     string getFileText(string);
@@ -28,6 +28,7 @@ class Menu
 
     void WriteOnMenu(string);
     Log* logger;
+    Display* display;
 
 };
 

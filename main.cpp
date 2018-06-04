@@ -11,6 +11,7 @@
 #include "LogModule.h"
 #include "game2048.h"
 #include "Menu.h"
+#include "display.h"
 using namespace std;
 
 // Sockets?
@@ -30,8 +31,10 @@ int main()
   Log log;
   log.allModuleOn();
   log.DisplayDebug();
-  Menu menu(log);
-  menu.DisplayMenu();
+  Display display(log);
+  Menu menu(log,display);
+  menu.setMenu();
+  display.print();
   Game2048 game(log);
   log.writeToLog(Main,"Game Starting ...\n");
   game.Start();

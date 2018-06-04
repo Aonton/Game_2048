@@ -11,12 +11,19 @@
 #include <ncurses.h>
 #include <vector>
 #include "logger.h"
+#include "position.h"
 using namespace std;
 
 class Display
 {
   public:
     Display(Log&);
+    ~Display();
+    void setScreenPiece(int,int,char);
+    void setScreenWithStrAtPos(int, int, string);
+    void setScreenWithStr(string);
+    void print();
+    void setCursorPos(int,int);
 
   private:
     int getScrLen();
@@ -32,6 +39,7 @@ class Display
     int min_len;
     int min_wid;
     vector< vector<char> > display_board;
+    Position cursor_pos;
 
     Log* logger;
 };

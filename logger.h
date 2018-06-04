@@ -26,7 +26,7 @@ class Log
     void flipState(Module);
     void setModule(Module,bool);
     // function to write any module output to log
-    void writeToLog(Module,string,bool = true);
+    void writeToLog(Module,string, bool = true);
     // function to write to log for Log Module
 
     void allModuleOff();
