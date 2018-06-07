@@ -19,6 +19,7 @@ class Menu
     Menu(Log&, Display&);
     void setMenu();
   private:
+    // move center func to diplay
     string CenterText(string);
     string getFileText(string);
     string getWelcomeMessage();

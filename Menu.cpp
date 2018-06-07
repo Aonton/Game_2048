@@ -17,28 +17,18 @@ Menu::Menu(Log& log, Display& display)
 
 void Menu::setMenu()
 {
-  int x, y;
+  int x;
+  int y;
+  int space = 2;
+  display->setScreenWithStrCenteredH(getWelcomeMessage());
+  y = display->getCursorPosY();
+  display->SkipLine(space);
 
-  display->setScreenWithStrAtPos(0,0,getWelcomeMessage());
-  display->setScreenWithStr(getGame2048Icon());
-  display->setScreenWithStr(getMenuPageDisplay());
-}
+  display->setScreenWithStrCenteredH(getGame2048Icon());
+  x = display->getCursorPosX();
 
-string Menu::CenterText(string text)
-{
-  int x, y;
-  int length = text.length();
-  getmaxyx(stdscr,y,x);
-
-  if(x < length)
-  {
-    return text;
-  }
-
-  int diff = x  - length;
-  int pad1 = diff/2;
-  int pad2 = diff - pad1;
-  return string(pad1,' ') + text + string(pad2,' ');
+  display->setScreenWithStrAtPos(x+10,y+space,getMenuPageDisplay());
+  display->setCursorPos(x+4,y+9);
 }
 
 string Menu::getWelcomeMessage()
@@ -61,18 +51,18 @@ string Menu::getMenuPageDisplay()
   return(getFileText("menuPageDisplay.txt"));
 }
 
-// The text returned will always be centered
 string Menu::getFileText(string file)
 {
-  string text = "";
-  string temp;
   ifstream infile;
   infile.open(file);
+  string text = "";
+  string temp = "";
+
   while(!infile.eof())
   {
     getline(infile,temp);
-    temp = CenterText(temp);
-    text = text + temp;
+
+    text = text + '\n' + temp;
   }
   infile.close();
   return text;

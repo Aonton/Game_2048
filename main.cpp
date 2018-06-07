@@ -35,6 +35,7 @@ int main()
   Menu menu(log,display);
   menu.setMenu();
   display.print();
+  display.EndDisplay();
   Game2048 game(log);
   log.writeToLog(Main,"Game Starting ...\n");
   game.Start();
