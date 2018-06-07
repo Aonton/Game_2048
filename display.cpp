@@ -42,6 +42,17 @@ Display::~Display()
   endwin();
 }
 
+void Display::highlightPiece(int x, int y)
+{
+  display_board_highlight[x][y] = true;
+}
+
+void Display::unhighlightPiece(int x, int y)
+{
+  display_board_highlight[x][y] = false;
+}
+
+
 void Display::EndDisplay()
 {
   endwin();
@@ -70,11 +81,14 @@ void Display::refreshScrDim()
 void Display::initBoard()
 {
   display_board.resize(wid);
+  display_board_highlight.resize(wid);
   for(int row = 0; row<wid; row++)
   {
     display_board[row].resize(len);
+    display_board_highlight[row].resize(len);
     for(int col = 0; col<len; col++)
     {
+      display_board_highlight[row][col] = false;
       display_board[row][col] = ' ';
     }
   }
@@ -88,9 +102,14 @@ void Display::print()
     {
       //addch(display_board[j][i]);
       //printw(&display_board[j][i]);
+
+      if(display_board_highlight[j][i])
+      {
+          attron(A_STANDOUT);
+      }
       move(i,j);
-      //addch('*');
       addch(display_board[j][i]);
+      attroff(A_STANDOUT);
       //logger->writeToLog(Dis,string(1,display_board[j][i]),false);
     }
   }

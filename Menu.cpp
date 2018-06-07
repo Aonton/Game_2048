@@ -28,7 +28,11 @@ void Menu::setMenu()
   x = display->getCursorPosX();
 
   display->setScreenWithStrAtPos(x+10,y+space,getMenuPageDisplay());
-  display->setCursorPos(x+4,y+9);
+
+  for(int i=18; i<28; i++)
+  {
+    display->highlightPiece(x+i,y+6);
+  }
 }
 
 string Menu::getWelcomeMessage()

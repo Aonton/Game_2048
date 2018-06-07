@@ -27,6 +27,8 @@ class Display
     void setCursorPos(int,int);
     void EndDisplay();
     void SkipLine(int);
+    void highlightPiece(int,int);
+    void unhighlightPiece(int,int);
 
     int getCursorPosX();
     int getCursorPosY();
@@ -45,6 +47,7 @@ class Display
     int min_len;
     int min_wid;
     vector< vector<char> > display_board;
+    vector< vector<bool> > display_board_highlight;
     Position cursor_pos;
 
     Log* logger;
