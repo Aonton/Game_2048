@@ -94,7 +94,7 @@ void Display::initBoard()
   }
 }
 
-void Display::print()
+int Display::print()
 {
   for(int i=0; i<len; i++)
   {
@@ -114,7 +114,7 @@ void Display::print()
     }
   }
 
-  getch();
+  return(getch());
 }
 
 void Display::setCursorPos(int x, int y)
@@ -188,7 +188,13 @@ int Display::getCursorPosY()
   return cursor_pos.col;
 }
 
-void Display:: setScreenWithStrCenteredH(string text)
+void Display::setScreenWithStrCenteredHAtPos(int pos, string text)
+{
+  setCursorPos(pos,cursor_pos.row);
+  setScreenWithStrCenteredH(text);
+}
+
+void Display::setScreenWithStrCenteredH(string text)
 {
   int length = 0;
   int diff = 0;

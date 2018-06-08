@@ -17,9 +17,9 @@ namespace module
     Scor,
     Input,
     Men,
+    MenCtr,
     Dis,
     Logger,
   } Module;
 }
-
 #endif

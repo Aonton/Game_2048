@@ -20,6 +20,7 @@ Log::Log()
   logList.insert(make_pair(Scor,false));
   logList.insert(make_pair(Input,false));
   logList.insert(make_pair(Men,false));
+  logList.insert(make_pair(MenCtr,false));
   logList.insert(make_pair(Logger,false));
   logList.insert(make_pair(Dis,false));
 }
@@ -116,6 +117,9 @@ string Log::getModName(Module mod)
       break;
     case Men:
       modName = "Menu";
+      break;
+    case MenCtr:
+      modName = "Menu Controller";
       break;
     case Logger:
       modName = "Logger";

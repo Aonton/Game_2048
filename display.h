@@ -23,7 +23,8 @@ class Display
     void setScreenWithStrAtPos(int, int, string);
     void setScreenWithStr(string);
     void setScreenWithStrCenteredH(string);
-    void print();
+    void setScreenWithStrCenteredHAtPos(int,string);
+    int print();
     void setCursorPos(int,int);
     void EndDisplay();
     void SkipLine(int);

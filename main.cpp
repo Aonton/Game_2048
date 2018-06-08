@@ -12,6 +12,7 @@
 #include "game2048.h"
 #include "Menu.h"
 #include "display.h"
+#include "menuController.h"
 using namespace std;
 
 // Sockets?
@@ -32,9 +33,10 @@ int main()
   log.allModuleOn();
   log.DisplayDebug();
   Display display(log);
-  Menu menu(log,display);
-  menu.setMenu();
-  display.print();
+  MenuController menuController(log);
+  Menu menu(log,display,menuController);
+  menu.DisplayMenu();
+  menu.MenuLoop();
   display.EndDisplay();
   Game2048 game(log);
   log.writeToLog(Main,"Game Starting ...\n");

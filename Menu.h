@@ -11,16 +11,18 @@
 #include <fstream>
 #include "logger.h"
 #include "display.h"
+#include "position.h"
+#include "menuController.h"
 using namespace std;
 
 class Menu
 {
   public:
-    Menu(Log&, Display&);
-    void setMenu();
+    Menu(Log&, Display&, MenuController&);
+    int DisplayMenu();
+    void MenuLoop();
   private:
-    // move center func to diplay
-    string CenterText(string);
+    void initMenu();
     string getFileText(string);
     string getWelcomeMessage();
     string getGame2048Icon();
@@ -28,8 +30,17 @@ class Menu
     string getMenuPageDisplay();
 
     void WriteOnMenu(string);
+    void setOptHighlight();
+    void unsetOptHighlight();
     Log* logger;
     Display* display;
+    MenuController* menuController;
+
+    Position welMenuPos;
+    Position game2048MenuPos;
+    Position menuPos;
+
+    int curKey;
 
 };
 
