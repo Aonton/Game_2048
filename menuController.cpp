@@ -85,7 +85,7 @@ MenuOpt MenuController::getOpt()
   return curOpt;
 }
 
-int MenuController::getOptStrLen(MenuOpt option)
+int MenuController::getOptStrLen()
 {
   switch(curOpt)
   {
@@ -108,4 +108,11 @@ int MenuController::getOptStrLen(MenuOpt option)
     default:
       break;
   }
+}
+
+int MenuController::getMenuOptStart(int menuLen, int optLen)
+{
+  int diff = menuLen  - optLen;
+  int pad1 = diff/2;
+  return pad1;
 }

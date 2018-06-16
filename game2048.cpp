@@ -4,7 +4,7 @@
 */
 #include "Game2048.h"
 
-Game2048::Game2048(Log& log):board(10,6,2,log),
+Game2048::Game2048(Log& log, Display& display):board(10,6,2,log),
                              collDetec(board,score,2048,log),
                              piece(pieces,board,log),
                              score(log),
@@ -13,6 +13,7 @@ Game2048::Game2048(Log& log):board(10,6,2,log),
   pieces.push_back(2);
   pieces.push_back(4);
   Game2048::logger = &log;
+  Game2048::display = &display;
   Game2048::showLostMessage = true;
   Game2048::contGame = true;
   initscr();

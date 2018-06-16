@@ -13,21 +13,17 @@
 #include "display.h"
 #include "position.h"
 #include "menuController.h"
+#include "fileController.h"
 using namespace std;
 
 class Menu
 {
   public:
-    Menu(Log&, Display&, MenuController&);
+    Menu(Log&, Display&, MenuController&, FileController&);
     int DisplayMenu();
     void MenuLoop();
   private:
     void initMenu();
-    string getFileText(string);
-    string getWelcomeMessage();
-    string getGame2048Icon();
-    //string getTetrisIcon();
-    string getMenuPageDisplay();
 
     void WriteOnMenu(string);
     void setOptHighlight();
@@ -35,6 +31,7 @@ class Menu
     Log* logger;
     Display* display;
     MenuController* menuController;
+    FileController* fileController;
 
     Position welMenuPos;
     Position game2048MenuPos;

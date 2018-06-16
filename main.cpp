@@ -13,7 +13,10 @@
 #include "Menu.h"
 #include "display.h"
 #include "menuController.h"
+#include "menuOptions.h"
+#include "fileController.h"
 using namespace std;
+using namespace menuOpt;
 
 // Sockets?
 // add display centering
@@ -34,16 +37,23 @@ int main()
   log.DisplayDebug();
   Display display(log);
   MenuController menuController(log);
-  Menu menu(log,display,menuController);
-  menu.DisplayMenu();
+  FileController fileController(log);
+  Menu menu(log,display,menuController,fileController);
   menu.MenuLoop();
-  display.EndDisplay();
-  Game2048 game(log);
-  log.writeToLog(Main,"Game Starting ...\n");
-  game.Start();
-  game.End();
-  cout<< getGameOverMessage() << endl;
-  log.writeToLog(Main,"Game Ended\n");
+  if(menuController.getOpt()==New)
+  {
+    display.EndDisplay();
+    Game2048 game(log,display);
+    log.writeToLog(Main,"Game Starting ...\n");
+    game.Start();
+    game.End();
+    cout<< getGameOverMessage() << endl;
+    log.writeToLog(Main,"Game Ended\n");
+  }
+  else
+  {
+    display.EndDisplay();
+  }
   log.allModuleOff();
 }
 

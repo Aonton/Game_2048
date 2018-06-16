@@ -19,6 +19,7 @@ namespace module
     Men,
     MenCtr,
     Dis,
+    File,
     Logger,
   } Module;
 }

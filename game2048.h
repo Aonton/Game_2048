@@ -17,12 +17,13 @@
 #include "score.h"
 #include "logger.h"
 #include "LogModule.h"
+#include "display.h"
 using namespace std;
 
 class Game2048
 {
   public:
-    Game2048(Log&);
+    Game2048(Log&, Display&);
     void Start();
     void End();
 
@@ -47,6 +48,7 @@ class Game2048
     PieceGen piece;
     UserInput input;
     Log* logger;
+    Display* display;
     bool showLostMessage;
     bool contGame;
 

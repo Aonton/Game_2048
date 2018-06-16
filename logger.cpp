@@ -23,6 +23,7 @@ Log::Log()
   logList.insert(make_pair(MenCtr,false));
   logList.insert(make_pair(Logger,false));
   logList.insert(make_pair(Dis,false));
+  logList.insert(make_pair(File,false));
 }
 
 Log::~Log()
@@ -126,6 +127,9 @@ string Log::getModName(Module mod)
       break;
     case Dis:
       modName = "Display";
+      break;
+    case File:
+      modName = "FileController";
       break;
     default:
       WriteToLog("Error: No Logger Module Name for this input\n");

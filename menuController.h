@@ -19,7 +19,8 @@ class MenuController
     MenuController(Log&);
     void ChangeOpt(int);
     MenuOpt getOpt();
-    int getOptStrLen(MenuOpt);
+    int getOptStrLen();
+    int getMenuOptStart(int, int);
   private:
     void WriteOnMenuCtr(string);
     MenuOpt curOpt;
