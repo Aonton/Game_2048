@@ -24,6 +24,9 @@ Log::Log()
   logList.insert(make_pair(Logger,false));
   logList.insert(make_pair(Dis,false));
   logList.insert(make_pair(File,false));
+  logList.insert(make_pair(HighScorBoard,false));
+  logList.insert(make_pair(Cred,false));
+  logList.insert(make_pair(GameCtr,false));
 }
 
 Log::~Log()
@@ -130,6 +133,15 @@ string Log::getModName(Module mod)
       break;
     case File:
       modName = "FileController";
+      break;
+    case HighScorBoard:
+      modName = "HighScoreBoard";
+      break;
+    case Cred:
+      modName = "Credits";
+      break;
+    case GameCtr:
+      modName = "GameController";
       break;
     default:
       WriteToLog("Error: No Logger Module Name for this input\n");

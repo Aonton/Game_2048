@@ -12,7 +12,7 @@ using namespace std;
 
 Display::Display(Log& log)
 {
-  Display::len = 50;
+  Display::len = 46;
   Display::wid = 150;
   Display::max_len = 50;
   Display::max_wid = 150;
@@ -72,7 +72,7 @@ int Display::getScrWid()
 
 void Display::refreshScrDim()
 {
-  int x, y;
+  int x = 0, y = 0;
   getmaxyx(stdscr,y,x);
   len = y;
   wid = x;
@@ -227,4 +227,50 @@ void Display::setScreenWithStrCenteredH(string text)
 void Display::SkipLine(int lines)
 {
   cursor_pos.col+=lines;
+}
+
+void Display::setBorder(char design)
+{
+  for(int i=0; i<len; i++)
+  {
+    display_board[0][i] = design;
+    display_board[wid-1][i] = design;
+  }
+
+  for(int i=1; i<wid; i++)
+  {
+    display_board[i][0] = design;
+    display_board[i][len-1] = design;
+  }
+
+}
+
+// clears a rectangle at a postion
+void Display::clearScreenPartial(int x,int y, int rectLen, int rectWid)
+{
+  if( ( (rectWid <= wid) && (rectWid > 0) ) && ( (rectLen <= len) && (rectLen > 0) ) )
+  {
+    for(int i=x; i<rectWid+x; i++)
+    {
+      for(int j=y; j<rectLen+y; j++)
+      {
+        display_board[i][j] = ' ';
+      }
+    }
+  }
+}
+
+void Display::clearScreenPartialCenter(int y, int rectLen, int rectWid)
+{
+  int diff = 0;
+  int pad1 = 0;
+
+  if(rectWid < wid)
+  {
+    diff = wid  - rectWid;
+    pad1 = diff/2;
+  }
+
+  clearScreenPartial(pad1,y,rectLen,rectWid);
+
 }

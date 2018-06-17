@@ -8,13 +8,7 @@
 #include <map>
 #include <fstream>
 #include "logger.h"
-#include "LogModule.h"
-#include "game2048.h"
-#include "Menu.h"
-#include "display.h"
-#include "menuController.h"
-#include "menuOptions.h"
-#include "fileController.h"
+#include "GameController.h"
 using namespace std;
 using namespace menuOpt;
 
@@ -28,6 +22,7 @@ using namespace menuOpt;
 // Make sure screen is big enough
 // Make center display class
 // Move all long string displays files
+// TO DO: Replace all int, int with Pos
 string getGameOverMessage();
 
 int main()
@@ -35,25 +30,9 @@ int main()
   Log log;
   log.allModuleOn();
   log.DisplayDebug();
-  Display display(log);
-  MenuController menuController(log);
-  FileController fileController(log);
-  Menu menu(log,display,menuController,fileController);
-  menu.MenuLoop();
-  if(menuController.getOpt()==New)
-  {
-    display.EndDisplay();
-    Game2048 game(log,display);
-    log.writeToLog(Main,"Game Starting ...\n");
-    game.Start();
-    game.End();
-    cout<< getGameOverMessage() << endl;
-    log.writeToLog(Main,"Game Ended\n");
-  }
-  else
-  {
-    display.EndDisplay();
-  }
+  GameController GameCtr(log);
+  GameCtr.Init();
+  GameCtr.Loop();
   log.allModuleOff();
 }
 

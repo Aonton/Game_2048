@@ -27,6 +27,22 @@ Menu::Menu(Log& log,
   initMenu();
 }
 
+void Menu::endMenu()
+{
+  unsetOptHighlight();
+
+  display->clearScreenPartialCenter(welMenuPos.row,
+                                    fileController->getFileTextWidWelcome(),
+                                    fileController->getFileTextMaxLenWelcome());
+  display->clearScreenPartialCenter(game2048MenuPos.row,
+                                    fileController->getFileTextWidGame2048Icon(),
+                                    fileController->getFileTextMaxLenGame2048Icon());
+  display->clearScreenPartial(menuPos.col,
+                              menuPos.row,
+                              fileController->getFileTextWidMenuDisplay(),
+                              fileController->getFileTextMaxLenMenuDisplay());
+}
+
 void Menu::initMenu()
 {
   int x;
@@ -48,7 +64,7 @@ void Menu::initMenu()
   // TO DO: REMOVE HARDCORE
   for(int i=18; i<28; i++)
   {
-    display->highlightPiece(90+i,19);
+    display->highlightPiece(90+i,18);
   }
 }
 
@@ -77,10 +93,10 @@ void Menu::MenuLoop()
 void Menu::unsetOptHighlight()
 {
   // TO DO: REMOVE HARD Code
-  int startRow = 19;
+  int startRow = 18;
   int optLen = menuController->getOptStrLen();
   int startCol = 81 + menuController->getMenuOptStart(
-    fileController->getFileTextMaxLen("menuPageDisplay.txt"),optLen);
+    fileController->getFileTextMaxLenMenuDisplay(),optLen);
   int row = static_cast<MenuOpt> (menuController->getOpt());
   for(int i=18; i<2+optLen+18; i++)
   {
@@ -91,10 +107,10 @@ void Menu::unsetOptHighlight()
 void Menu::setOptHighlight()
 {
   // TO DO: REMOVE HARD Code
-  int startRow = 19;
+  int startRow = 18;
   int optLen = menuController->getOptStrLen();
   int startCol = 81 + menuController->getMenuOptStart(
-    fileController->getFileTextMaxLen("menuPageDisplay.txt"),optLen);
+    fileController->getFileTextMaxLenMenuDisplay(),optLen);
   int row = static_cast<MenuOpt> (menuController->getOpt());
   for(int i=18; i<2+optLen+18; i++)
   {

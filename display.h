@@ -30,13 +30,16 @@ class Display
     void SkipLine(int);
     void highlightPiece(int,int);
     void unhighlightPiece(int,int);
+    void setBorder(char);
+    void clearScreenPartial(int,int,int,int);
+    void clearScreenPartialCenter(int,int,int);
 
     int getCursorPosX();
     int getCursorPosY();
-
-  private:
     int getScrLen();
     int getScrWid();
+
+  private:
     void initBoard();
     void refreshScrDim();
     void WriteOnDisplay(string);

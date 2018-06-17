@@ -17,14 +17,33 @@ class FileController
   public:
     FileController(Log&);
     int getFileTextMaxLen(string);
+    int getFileTextWid(string);
+    int getFileTextMaxLenMenuDisplay();
+    int getFileTextWidMenuDisplay();
+    int getFileTextMaxLenWelcome();
+    int getFileTextWidWelcome();
+    int getFileTextMaxLenGame2048Icon();
+    int getFileTextWidGame2048Icon();
+
     string getWelcomeMessage();
     string getGame2048Icon();
     string getMenuPageDisplay();
-
-    void WriteOnFileLog(string);
+    string getHighScoreDisplay();
+    string getOptionDisplay();
+    string getCreditsDisplay();
+    string getTopScoreList();
 
   private:
+    void WriteOnFileLog(string);
     string getFileText(string);
+    const string WELCOME_FILE;
+    const string GAME2048_ICON_FILE;
+    const string MENU_PAGE_FILE;
+    const string HIGHSCORE_FILE;
+    const string OPTION_FILE;
+    const string CREDITS_FILE;
+    const string TOP_SCORE_FILE;
+    // TO DO: Save into a database
 
   Log* logger;
 

@@ -20,6 +20,7 @@ class Menu
 {
   public:
     Menu(Log&, Display&, MenuController&, FileController&);
+    void endMenu();
     int DisplayMenu();
     void MenuLoop();
   private:

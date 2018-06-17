@@ -20,6 +20,9 @@ namespace module
     MenCtr,
     Dis,
     File,
+    HighScorBoard,
+    Cred,
+    GameCtr,
     Logger,
   } Module;
 }
