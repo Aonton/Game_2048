@@ -10,14 +10,24 @@
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 #include<iostream>
+#include "menuController.h"
+#include "logger.h"
+#include "fileController.h"
+#include "display.h"
 using namespace std;
 
 class Configuration
 {
   public:
-    Configuration();
+    Configuration(Log&,
+                  MenuController&,
+                  FileController&,
+                  Display&);
+    void setBoard();
 
   private:
+    void WriteOnConfigLog(string);
+
     int boardRows;
     int boardCols;
     string sizeOpt;
@@ -29,5 +39,9 @@ class Configuration
     int scrmin_len;
     int scrmin_wid;
 
+    Log* logger;
+    MenuController* menuController;
+    FileController* fileController;
+    Display* display;
 };
 #endif

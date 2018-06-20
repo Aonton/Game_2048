@@ -56,10 +56,10 @@ void MenuController::ChangeOpt(int key)
       }
       else if(key==KEY_DOWN)
       {
-        curOpt = Credits;
+        curOpt = Creds;
       }
       break;
-    case Credits:
+    case Creds:
       if(key==KEY_UP)
       {
         curOpt = Opt;
@@ -72,7 +72,7 @@ void MenuController::ChangeOpt(int key)
     case Exit:
       if(key==KEY_UP)
       {
-        curOpt = Credits;
+        curOpt = Creds;
       }
       break;
     default:
@@ -99,7 +99,7 @@ int MenuController::getOptStrLen()
       return(15);
       break;
     case Opt:
-    case Credits:
+    case Creds:
       return(7);
       break;
     case Exit:
@@ -115,4 +115,9 @@ int MenuController::getMenuOptStart(int menuLen, int optLen)
   int diff = menuLen  - optLen;
   int pad1 = diff/2;
   return pad1;
+}
+
+void MenuController::setOpt(MenuOpt menuOpt)
+{
+  curOpt = menuOpt;
 }

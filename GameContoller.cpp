@@ -33,34 +33,71 @@ void GameController::Init()
 
 void GameController::Loop()
 {
-  switch(menuCtr.getOpt())
+  menu.endMenu();
+  BottomBackPanel bottomPanel(*logger,
+                              menuCtr,
+                              fileCtr,
+                              display);
+  int key = 0;
+  while(true)
   {
-    case New:
-      {
-        menu.endMenu();
-        display.EndDisplay();
-        Game2048 game(*logger,display);
-        WriteOnGameCtrLog("Game Starting ...\n");
-        game.Start();
-        game.End();
-        //cout<< getGameOverMessage() << endl;
-        WriteOnGameCtrLog("Game Ended\n");
-      }
-    break;
-    case HighScore:
-      {
-        menu.endMenu();
-        HighScoreBoard highScoreBoard(*logger,
-                                      menuCtr,
-                                      fileCtr,
-                                      display);
-        highScoreBoard.print();
-        display.print();
-        display.EndDisplay();
-      }
-    break;
-    default:
-      display.EndDisplay();
-    break;
+    switch(menuCtr.getOpt())
+    {
+      case New:
+        {
+          //display.EndDisplay();
+          Game2048 game(*logger,display);
+          WriteOnGameCtrLog("Game Starting ...\n");
+          game.Start();
+          game.End();
+          //cout<< getGameOverMessage() << endl;
+          WriteOnGameCtrLog("Game Ended\n");
+        }
+      break;
+      case HighScore:
+        {
+          HighScoreBoard highScoreBoard(*logger,
+                                        menuCtr,
+                                        fileCtr,
+                                        display);
+          highScoreBoard.setBoard();
+          bottomPanel.setBoard();
+        }
+      break;
+      case Opt:
+        {
+          Configuration config(*logger,
+                               menuCtr,
+                               fileCtr,
+                               display);
+          config.setBoard();
+          bottomPanel.setBoard();
+        }
+      break;
+      case Creds:
+        {
+          Credits credits(*logger,
+                          menuCtr,
+                          fileCtr,
+                          display);
+          credits.setBoard();
+          bottomPanel.setBoard();
+        }
+      break;
+      default:
+      break;
+    }
+
+    key = display.print();
+
+    if(key == (int)'b')
+    {
+      display.clearScreen();
+      menu.initMenu();
+      menu.MenuLoop();
+      menu.endMenu();
+    }
+
+    display.EndDisplay();
   }
 }

@@ -21,6 +21,9 @@
 #include "menuOptions.h"
 #include "fileController.h"
 #include "highScoreBoard.h"
+#include "configuration.h"
+#include "credits.h"
+#include "BottomBackPanel.h"
 using namespace std;
 using namespace menuOpt;
 

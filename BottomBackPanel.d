@@ -1,3 +1,3 @@
-configuration.o: configuration.cpp configuration.h menuController.h \
+BottomBackPanel.o: BottomBackPanel.cpp BottomBackPanel.h menuController.h \
   logger.h LogModule.h menuOptions.h fileController.h display.h \
   position.h

@@ -17,7 +17,8 @@ FileController::FileController(Log& log):
                               HIGHSCORE_FILE("highScoreBoard.txt"),
                               OPTION_FILE("options.txt"),
                               CREDITS_FILE("credits.txt"),
-                              TOP_SCORE_FILE("topScores.txt")
+                              TOP_SCORE_FILE("topScores.txt"),
+                              BOTTOM_BACK_PANEL_FILE("bottomBackPanel.txt")
 {
     FileController::logger = &log;
 }
@@ -51,10 +52,7 @@ int FileController::getFileTextMaxLen(string file)
   {
     getline(infile,temp);
 
-    if(temp.length()>len)
-    {
-      len = temp.length();
-    }
+    len++;
   }
   infile.close();
   return len;
@@ -71,10 +69,14 @@ int FileController::getFileTextWid(string file)
   {
     getline(infile,temp);
 
-    wid++;
+    if(temp.length()>wid)
+    {
+      wid = temp.length();
+    }
   }
   infile.close();
   return wid;
+
 }
 
 string FileController::getWelcomeMessage()
@@ -117,6 +119,11 @@ string FileController::getTopScoreList()
   return(getFileText(TOP_SCORE_FILE));
 }
 
+string FileController::getBottomBackPanel()
+{
+  return(getFileText(BOTTOM_BACK_PANEL_FILE));
+}
+
 void FileController::WriteOnFileLog(string text)
 {
   logger->writeToLog(File,text);
@@ -150,4 +157,14 @@ int FileController::getFileTextMaxLenGame2048Icon()
 int FileController::getFileTextWidGame2048Icon()
 {
   return(getFileTextWid(GAME2048_ICON_FILE));
+}
+
+int FileController::getFileTextWidBottomBackPanel()
+{
+  return(getFileTextWid(BOTTOM_BACK_PANEL_FILE));
+}
+
+int FileController::getFileTextMaxLenBottomBackPanel()
+{
+  return(getFileTextMaxLen(BOTTOM_BACK_PANEL_FILE));
 }

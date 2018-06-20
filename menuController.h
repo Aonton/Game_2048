@@ -18,6 +18,7 @@ class MenuController
   public:
     MenuController(Log&);
     void ChangeOpt(int);
+    void setOpt(MenuOpt);
     MenuOpt getOpt();
     int getOptStrLen();
     int getMenuOptStart(int, int);

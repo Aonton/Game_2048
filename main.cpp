@@ -27,6 +27,7 @@ string getGameOverMessage();
 
 int main()
 {
+  cout << "\e[8;50;150t";
   Log log;
   log.allModuleOn();
   log.DisplayDebug();

@@ -19,9 +19,14 @@ HighScoreBoard::HighScoreBoard(Log& log,
   HighScoreBoard::display = &display;
 }
 
-void HighScoreBoard::print()
+void HighScoreBoard::setBoard()
 {
   display->setBorder('H');
   display->setScreenWithStrCenteredHAtPos(5,
-    fileController->getHighScoreDisplay());
+  fileController->getHighScoreDisplay());
+}
+
+void HighScoreBoard::WriteOnHighScoreBoardLog(string text)
+{
+  logger->writeToLog(HighScorBoard,text);
 }

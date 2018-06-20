@@ -33,6 +33,7 @@ class Display
     void setBorder(char);
     void clearScreenPartial(int,int,int,int);
     void clearScreenPartialCenter(int,int,int);
+    void clearScreen();
 
     int getCursorPosX();
     int getCursorPosY();

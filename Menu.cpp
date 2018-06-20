@@ -24,6 +24,7 @@ Menu::Menu(Log& log,
   Menu::game2048MenuPos.col = 30;
   Menu::menuPos.row = 15;
   Menu::menuPos.col = 100;
+  menuController.setOpt(New);
   initMenu();
 }
 
@@ -32,15 +33,15 @@ void Menu::endMenu()
   unsetOptHighlight();
 
   display->clearScreenPartialCenter(welMenuPos.row,
-                                    fileController->getFileTextWidWelcome(),
-                                    fileController->getFileTextMaxLenWelcome());
+                                    fileController->getFileTextMaxLenWelcome(),
+                                    fileController->getFileTextWidWelcome());
   display->clearScreenPartialCenter(game2048MenuPos.row,
-                                    fileController->getFileTextWidGame2048Icon(),
-                                    fileController->getFileTextMaxLenGame2048Icon());
+                                    fileController->getFileTextMaxLenGame2048Icon(),
+                                    fileController->getFileTextWidGame2048Icon());
   display->clearScreenPartial(menuPos.col,
                               menuPos.row,
-                              fileController->getFileTextWidMenuDisplay(),
-                              fileController->getFileTextMaxLenMenuDisplay());
+                              fileController->getFileTextMaxLenMenuDisplay(),
+                              fileController->getFileTextWidMenuDisplay());
 }
 
 void Menu::initMenu()
@@ -61,11 +62,7 @@ void Menu::initMenu()
   menuPos.row,
   fileController->getMenuPageDisplay());
 
-  // TO DO: REMOVE HARDCORE
-  for(int i=18; i<28; i++)
-  {
-    display->highlightPiece(90+i,18);
-  }
+  setOptHighlight();
 }
 
 void Menu::WriteOnMenu(string text)
@@ -96,7 +93,7 @@ void Menu::unsetOptHighlight()
   int startRow = 18;
   int optLen = menuController->getOptStrLen();
   int startCol = 81 + menuController->getMenuOptStart(
-    fileController->getFileTextMaxLenMenuDisplay(),optLen);
+    fileController->getFileTextWidMenuDisplay(),optLen);
   int row = static_cast<MenuOpt> (menuController->getOpt());
   for(int i=18; i<2+optLen+18; i++)
   {
@@ -110,7 +107,7 @@ void Menu::setOptHighlight()
   int startRow = 18;
   int optLen = menuController->getOptStrLen();
   int startCol = 81 + menuController->getMenuOptStart(
-    fileController->getFileTextMaxLenMenuDisplay(),optLen);
+    fileController->getFileTextWidMenuDisplay(),optLen);
   int row = static_cast<MenuOpt> (menuController->getOpt());
   for(int i=18; i<2+optLen+18; i++)
   {

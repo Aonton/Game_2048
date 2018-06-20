@@ -22,7 +22,9 @@ namespace module
     File,
     HighScorBoard,
     Cred,
+    Config,
     GameCtr,
+    BBPanel,
     Logger,
   } Module;
 }

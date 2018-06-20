@@ -14,7 +14,7 @@ namespace menuOpt
     Cont,
     HighScore,
     Opt,
-    Credits,
+    Creds,
     Exit,
   } MenuOpt;
 }

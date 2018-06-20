@@ -20,11 +20,11 @@ class Menu
 {
   public:
     Menu(Log&, Display&, MenuController&, FileController&);
+    void initMenu();
     void endMenu();
     int DisplayMenu();
     void MenuLoop();
   private:
-    void initMenu();
 
     void WriteOnMenu(string);
     void setOptHighlight();

@@ -274,3 +274,15 @@ void Display::clearScreenPartialCenter(int y, int rectLen, int rectWid)
   clearScreenPartial(pad1,y,rectLen,rectWid);
 
 }
+
+void Display::clearScreen()
+{
+  for(int i=0; i<len; i++)
+  {
+    for(int j=0; j<wid; j++)
+    {
+      display_board[j][i] = ' ';
+    }
+  }
+  WriteOnDisplay("Screen Cleared");
+}
