@@ -26,6 +26,10 @@ class FileController
     int getFileTextWidGame2048Icon();
     int getFileTextMaxLenBottomBackPanel();
     int getFileTextWidBottomBackPanel();
+    int getFileTextWidBottomPanel();
+    int getFileTextMaxLenBottomPanel();
+    int getFileTextWidGame2048Board();
+    int getFileTextMaxLenGame2048Board();
 
     string getWelcomeMessage();
     string getGame2048Icon();
@@ -35,6 +39,9 @@ class FileController
     string getCreditsDisplay();
     string getTopScoreList();
     string getBottomBackPanel();
+    string getTopPanelDisplay();
+    string getBottomPanelDisplay();
+    string getGame2048BoardDisplay();
 
   private:
     void WriteOnFileLog(string);
@@ -47,6 +54,9 @@ class FileController
     const string CREDITS_FILE;
     const string TOP_SCORE_FILE;
     const string BOTTOM_BACK_PANEL_FILE;
+    const string TOP_PANEL_FILE;
+    const string BOTTOM_PANEL_FILE;
+    const string GAME2048_BOARD_FILE;
     // TO DO: Save into a database
 
   Log* logger;

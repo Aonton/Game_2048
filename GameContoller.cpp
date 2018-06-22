@@ -33,20 +33,21 @@ void GameController::Init()
 
 void GameController::Loop()
 {
+  bool cont = true;
   menu.endMenu();
   BottomBackPanel bottomPanel(*logger,
                               menuCtr,
                               fileCtr,
                               display);
   int key = 0;
-  while(true)
+  while(cont)
   {
     switch(menuCtr.getOpt())
     {
       case New:
         {
           //display.EndDisplay();
-          Game2048 game(*logger,display);
+          Game2048 game(*logger,display,fileCtr);
           WriteOnGameCtrLog("Game Starting ...\n");
           game.Start();
           game.End();
@@ -84,18 +85,24 @@ void GameController::Loop()
           bottomPanel.setBoard();
         }
       break;
+      case Exit:
+        cont = false;
+      break;
       default:
       break;
     }
 
-    key = display.print();
-
-    if(key == (int)'b')
+    if(cont)
     {
-      display.clearScreen();
-      menu.initMenu();
-      menu.MenuLoop();
-      menu.endMenu();
+      key = display.print();
+
+      if(key == (int)'b')
+      {
+        display.clearScreen();
+        menu.initMenu();
+        menu.MenuLoop();
+        menu.endMenu();
+      }
     }
 
     display.EndDisplay();

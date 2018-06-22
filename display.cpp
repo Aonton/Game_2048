@@ -188,13 +188,15 @@ int Display::getCursorPosY()
   return cursor_pos.col;
 }
 
-void Display::setScreenWithStrCenteredHAtPos(int pos, string text)
+/* Return the padding for centering the string */
+int Display::setScreenWithStrCenteredHAtPos(int pos, string text)
 {
   setCursorPos(pos,cursor_pos.row);
-  setScreenWithStrCenteredH(text);
+  return(setScreenWithStrCenteredH(text));
 }
 
-void Display::setScreenWithStrCenteredH(string text)
+/* Return the padding for centering the string */
+int Display::setScreenWithStrCenteredH(string text)
 {
   int length = 0;
   int diff = 0;
@@ -222,6 +224,8 @@ void Display::setScreenWithStrCenteredH(string text)
     }
     text.erase(0, pos + delimiter.length());
   }
+
+  return pad1;
 }
 
 void Display::SkipLine(int lines)

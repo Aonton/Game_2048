@@ -4,7 +4,8 @@
 */
 #include "Game2048.h"
 
-Game2048::Game2048(Log& log, Display& display):board(10,6,2,log),
+Game2048::Game2048(Log& log, Display& display, FileController& fileCtr):
+                             board(log,display,fileCtr),
                              collDetec(board,score,2048,log),
                              piece(pieces,board,log),
                              score(log),
@@ -16,6 +17,7 @@ Game2048::Game2048(Log& log, Display& display):board(10,6,2,log),
   Game2048::display = &display;
   Game2048::showLostMessage = true;
   Game2048::contGame = true;
+  Game2048::fileCtr = &fileCtr;
   initscr();
   cbreak();
   start_color();
@@ -30,21 +32,18 @@ void Game2048::End()
 
 void Game2048::DisplayGame()
 {
-  move(0,0);
+  display->setCursorPos(0,0);
   DisplayTopMenu();
   cout<< board;
   DisplayBottomMenu();
+  display->print();
 }
 
 void Game2048::DisplayTopMenu()
 {
-  printw("*************************************************************************************************\n");
-  printw("*            *             *           *****          *            *             *              *\n");
-  printw("*  REDO (R)  *  RESET (S)  *  EXIT(E)  *****  UP (^)  *  DOWN (v)  *  LEFT (<-)  *  RIGHT (->)  *\n");
-  printw("*            *             *           *****          *            *             *              *\n");
-  printw("*************************************************************************************************\n");
-  printw("\n");
-
+  // TO DO: REMOVE 5
+  display->setScreenWithStrCenteredHAtPos(5,
+    fileCtr->getTopPanelDisplay());
 }
 
 void Game2048::DisplayBottomMenu()
@@ -52,24 +51,32 @@ void Game2048::DisplayBottomMenu()
   // TO DO MAKE FLEXEBLE
   // TO DO CENTER TEXT FUNCTION
   int space = 33;
-  string str = to_string(score.getScore());
-  int length = str.length();
+  string scoreStr = to_string(score.getScore());
+  int length = scoreStr.length();
 
-  printw("*************************************************************************************************\n");
-  printw("*                                 *                       *                                     *\n");
-  printw("*              SCORE              *      OPTIONS (O)      *                                     *\n");
-  printw("*");
+  // TO DO: REMOVE MAX TO JUST LEN
+  const int fieldNum = 3;
+  display->setScreenWithStr("\n ");
+  int bottomPanelPosRow = display->getCursorPosY();
+  int padBottomPanel = display->setScreenWithStrCenteredH(fileCtr->getBottomPanelDisplay());
+  Position scorePos;
+  int width = (fileCtr->getFileTextWidBottomPanel() - fieldNum - 1)/fieldNum;
+  int diff = width - length;
+  if(diff>=0)
+  {
+    int pad = diff/2;
+    scorePos.col = pad + 1;
+    length = fileCtr->getFileTextMaxLenBottomPanel();
+    scorePos.row = (length/2) + 1;
+    display->setScreenWithStrAtPos(scorePos.col + padBottomPanel,
+      bottomPanelPosRow + scorePos.row,scoreStr);
+  }
+  else
+  {
+    WriteOnGameLog("FATAL ERROR: SCORE HAS EXCEED MAX");
+    exit(0);
+  }
 
-  printw("%*s%*c",
-          ((space - length) >> 1) + length,
-          str.c_str(),
-          ((space - length) >> 1) + ((space - length) & 1),
-          ' '
-        );
-  printw("*                       *                                     *\n");
-  printw("*                                 *                       *                                     *\n");
-  printw("*************************************************************************************************\n");
-  printw("\n");
 }
 
 void Game2048::SetUpGame()

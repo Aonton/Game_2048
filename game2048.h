@@ -18,12 +18,14 @@
 #include "logger.h"
 #include "LogModule.h"
 #include "display.h"
+#include "fileController.h"
+#include "position.h"
 using namespace std;
 
 class Game2048
 {
   public:
-    Game2048(Log&, Display&);
+    Game2048(Log&, Display&, FileController&);
     void Start();
     void End();
 
@@ -51,6 +53,7 @@ class Game2048
     Display* display;
     bool showLostMessage;
     bool contGame;
+    FileController* fileCtr;
 
     static const int end = 2048;
 };

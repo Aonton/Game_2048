@@ -8,7 +8,9 @@
 #include "board.h"
 using namespace std;
 
-GameBoard::GameBoard(int offset, int spacesBtw, int emptyLineNum, Log& log)
+GameBoard::GameBoard(Log& log,
+                     Display& display,
+                     FileController& fileCtr)
 {
   for(int row=0; row<GameBoard::ROW_NUM; row++)
   {
@@ -18,10 +20,9 @@ GameBoard::GameBoard(int offset, int spacesBtw, int emptyLineNum, Log& log)
     }
   }
 
-  GameBoard::offset = offset;
-  GameBoard::spacesBtw = spacesBtw;
-  GameBoard::emptyLineNum = emptyLineNum;
   GameBoard::logger = &log;
+  GameBoard::display = &display;
+  GameBoard::fileCtr = &fileCtr;
 }
 
 GameBoard::GameBoard(GameBoard& board)
@@ -29,100 +30,47 @@ GameBoard::GameBoard(GameBoard& board)
   *this = board;
 }
 
-void GameBoard::PrintOffset()
-{
-  for(int i=0; i<GameBoard::offset; i++)
-  {
-    WriteOnBoardLog(" ");
-    printw(" ");
-  }
-}
-
-void GameBoard::PrintBar()
-{
-  PrintOffset();
-  for(int i=0; i<=(16 + ((GameBoard::spacesBtw-1)*12)); i++)
-  {
-    WriteOnBoardLog("-");
-    printw("-");
-  }
-
-  WriteOnBoardLog("\n");
-  printw("\n");
-}
-
-void GameBoard::PrintSpace()
-{
-    for(int i=0; i<GameBoard::spacesBtw; i++)
-    {
-      WriteOnBoardLog(" ");
-      printw(" ");
-    }
-}
-
-void GameBoard::PrintEmptyLine()
-{
-  for(int i=0; i<GameBoard::emptyLineNum; i++)
-  {
-    PrintOffset();
-    WriteOnBoardLog("|");
-    printw("|");
-    for(int j=0; j<GameBoard::COL_NUM; j++)
-    {
-      PrintSpace();
-      PrintSpace();
-      PrintSpace();
-      WriteOnBoardLog("|");
-      printw("|");
-    }
-
-    WriteOnBoardLog("\n");
-    printw("\n");
-  }
-
-}
-
 void GameBoard::PrintBoard()
 {
-  string str;
-  int length = 0;
-
-  PrintBar();
+  const int fieldNum = 4;
+  int boardPosRow = display->getCursorPosY();
+  display->setScreenWithStr("#");
+  int boardWid = fileCtr->getFileTextWidGame2048Board() - 1;
+  int boardLen = fileCtr->getFileTextMaxLenGame2048Board() - 1;
+  int boardPad = display->setScreenWithStrCenteredH(
+    fileCtr->getGame2048BoardDisplay());
+  display->setScreenWithStr("\n ");
+  int cellWid = boardWid/4;
+  int cellLen = boardLen/4;
+  int cellLenPad = (cellLen/2) + 1;
 
   for(int row=0; row<GameBoard::ROW_NUM; row++)
   {
-    PrintEmptyLine();
-    PrintOffset();
-    WriteOnBoardLog("|");
-    printw("|");
-    PrintSpace();
     for(int col=0; col<GameBoard::COL_NUM; col++)
     {
-        if(board_nums[row][col] == 0)
-        {
-          PrintSpace();
-        }
-        else
-        {
-          WriteOnBoardLog(centerText(GameBoard::spacesBtw,to_string(board_nums[row][col])));
-          printw("%s",centerText(GameBoard::spacesBtw,to_string(board_nums[row][col])).c_str());
-        }
+      string pieceStr = to_string(board_nums[row][col]);
+      int pieceLen = pieceStr.length();
+      int diff = cellWid - pieceLen;
+      if(diff>=0)
+      {
+        int cellWidPad = diff/2;
+        display->setScreenWithStrAtPos(boardPad + cellWidPad + (cellWid*col),
+                                       boardPosRow + cellLenPad + (cellLen*row),
+                                       pieceStr);
+      }
+      else
+      {
+        WriteOnBoardLog("FATAL ERROR: PIECE VALUE IS IMPOSSIBLE");
+      }
 
-        PrintSpace();
-        WriteOnBoardLog("|");
-        printw("|");
-        PrintSpace();
+      WriteOnBoardLog(pieceStr + " ",false);
+
     }
-
-    PrintOffset();
-    WriteOnBoardLog("\n");
-    printw("\n");
-    PrintEmptyLine();
-    PrintBar();
+    WriteOnBoardLog("\n",false);
   }
 
-  WriteOnBoardLog("\n");
-  printw("\n");
+  display->setScreenWithStr("\n ");
+  display->setScreenWithStr("\n ");
 }
 
 void GameBoard::setPiece(int val, int row, int col)
@@ -257,10 +205,6 @@ void GameBoard::operator = (GameBoard& compareBoard)
           }
         }
     }
-
-    this->offset = compareBoard.offset;
-    this->spacesBtw = compareBoard.spacesBtw;
-    this->emptyLineNum = compareBoard.emptyLineNum;
   }
 }
 

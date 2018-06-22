@@ -8,12 +8,14 @@
 #include <fstream>
 #include <ncurses.h>
 #include "logger.h"
+#include "fileController.h"
+#include "display.h"
 using namespace std;
 
 class GameBoard
 {
   public:
-    GameBoard(int,int,int,Log&);
+    GameBoard(Log&, Display& display, FileController&);
     GameBoard(GameBoard&);
 
     void PrintBoard();
@@ -32,10 +34,6 @@ class GameBoard
     friend ofstream& operator<< (ofstream&, GameBoard&);
 
   private:
-    void PrintBar();
-    void PrintOffset();
-    void PrintSpace();
-    void PrintEmptyLine();
 
     void WriteOnBoardLog(string, bool = false);
     string centerText(int,string);
@@ -44,11 +42,10 @@ class GameBoard
     const static int COL_NUM = 4;
 
     int board_nums [ROW_NUM][COL_NUM];
-    int offset;
-    int spacesBtw;
-    int emptyLineNum;
 
     Log* logger;
+    Display* display;
+    FileController* fileCtr;
 };
 
 #endif

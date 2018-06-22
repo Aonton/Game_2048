@@ -18,7 +18,10 @@ FileController::FileController(Log& log):
                               OPTION_FILE("options.txt"),
                               CREDITS_FILE("credits.txt"),
                               TOP_SCORE_FILE("topScores.txt"),
-                              BOTTOM_BACK_PANEL_FILE("bottomBackPanel.txt")
+                              BOTTOM_BACK_PANEL_FILE("bottomBackPanel.txt"),
+                              TOP_PANEL_FILE("topPanel.txt"),
+                              BOTTOM_PANEL_FILE("bottomPanel.txt"),
+                              GAME2048_BOARD_FILE("game2048Board.txt")
 {
     FileController::logger = &log;
 }
@@ -124,6 +127,21 @@ string FileController::getBottomBackPanel()
   return(getFileText(BOTTOM_BACK_PANEL_FILE));
 }
 
+string FileController::getTopPanelDisplay()
+{
+  return(getFileText(TOP_PANEL_FILE));
+}
+
+string FileController::getBottomPanelDisplay()
+{
+  return(getFileText(BOTTOM_PANEL_FILE));
+}
+
+string FileController::getGame2048BoardDisplay()
+{
+  return(getFileText(GAME2048_BOARD_FILE));
+}
+
 void FileController::WriteOnFileLog(string text)
 {
   logger->writeToLog(File,text);
@@ -167,4 +185,24 @@ int FileController::getFileTextWidBottomBackPanel()
 int FileController::getFileTextMaxLenBottomBackPanel()
 {
   return(getFileTextMaxLen(BOTTOM_BACK_PANEL_FILE));
+}
+
+int FileController::getFileTextWidBottomPanel()
+{
+  return(getFileTextWid(BOTTOM_PANEL_FILE));
+}
+
+int FileController::getFileTextMaxLenBottomPanel()
+{
+  return(getFileTextMaxLen(BOTTOM_PANEL_FILE));
+}
+
+int FileController::getFileTextWidGame2048Board()
+{
+  return(getFileTextWid(GAME2048_BOARD_FILE));
+}
+
+int FileController::getFileTextMaxLenGame2048Board()
+{
+  return(getFileTextMaxLen(GAME2048_BOARD_FILE));
 }

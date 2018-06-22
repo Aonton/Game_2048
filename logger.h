@@ -18,6 +18,8 @@ using namespace module;
 
 class Log
 {
+  // TO MAKE A TEAR DOWN SO LOG CAN FINISH: USER SCREEN TO SIGNAL THE
+  // SHUTDOWN IF LOGS ARE ON
   public:
     Log();
     ~Log();

@@ -7,7 +7,7 @@
 	x Stage 2: Fix frame/flickering problem
 	x Stage 3: Fix logic and repeated code segments
 	x Stage 4: Add Log File/Error Log
-	- Stage 5: Modulate Display
+	x Stage 5: Modulate Display
 	- Stage 6: Connect to Database (MongoDB?) 
 	- Stage 7: Resizing Screen Display (Signal Handling & Muti-Threading)
 	- Stage 8: Add Flexible Screen Display
