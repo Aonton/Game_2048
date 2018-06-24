@@ -114,6 +114,11 @@ int Display::print()
     }
   }
 
+  return(DisplayGetch());
+}
+
+int Display::DisplayGetch()
+{
   return(getch());
 }
 
@@ -288,5 +293,10 @@ void Display::clearScreen()
       display_board[j][i] = ' ';
     }
   }
-  WriteOnDisplay("Screen Cleared");
+  WriteOnDisplay("Screen Cleared\n");
+}
+
+void Display::clearBorder()
+{
+  setBorder(' ');
 }

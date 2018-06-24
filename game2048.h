@@ -27,18 +27,17 @@ class Game2048
   public:
     Game2048(Log&, Display&, FileController&);
     void Start();
-    void End();
 
   private:
     void ClearScreen();
     void DisplayTopMenu();
     void DisplayBottomMenu();
-    void DisplayGame();
+    int DisplayGame();
     void TimerToCont();
-    void SetUpGame();
+    int SetUpGame();
     void Win(bool&, bool&, int&);
-    void Redo();
-    void Reset();
+    int Redo();
+    int Reset();
     void WriteOnGameLog(string);
 
     string getLostMessage();

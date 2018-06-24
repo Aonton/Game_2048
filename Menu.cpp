@@ -42,6 +42,7 @@ void Menu::endMenu()
                               menuPos.row,
                               fileController->getFileTextMaxLenMenuDisplay(),
                               fileController->getFileTextWidMenuDisplay());
+  display->clearBorder();
 }
 
 void Menu::initMenu()
@@ -113,4 +114,11 @@ void Menu::setOptHighlight()
   {
     display->highlightPiece(startCol+i,startRow+(row*2));
   }
+}
+
+void Menu::start()
+{
+  initMenu();
+  MenuLoop();
+  endMenu();
 }

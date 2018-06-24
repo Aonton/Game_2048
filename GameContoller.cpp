@@ -46,12 +46,15 @@ void GameController::Loop()
     {
       case New:
         {
-          //display.EndDisplay();
           Game2048 game(*logger,display,fileCtr);
           WriteOnGameCtrLog("Game Starting ...\n");
           game.Start();
-          game.End();
-          //cout<< getGameOverMessage() << endl;
+          display.clearScreen();
+          menu.start();
+          if(menuCtr.getOpt()==Exit)
+          {
+            cont = false;
+          }
           WriteOnGameCtrLog("Game Ended\n");
         }
       break;
@@ -94,17 +97,17 @@ void GameController::Loop()
 
     if(cont)
     {
-      key = display.print();
+      if(menuCtr.getOpt()!=New)
+      {
+        key = display.print();
+      }
 
       if(key == (int)'b')
       {
         display.clearScreen();
-        menu.initMenu();
-        menu.MenuLoop();
-        menu.endMenu();
+        menu.start();
       }
     }
-
-    display.EndDisplay();
   }
+  display.EndDisplay();
 }

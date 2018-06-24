@@ -48,7 +48,13 @@ void GameBoard::PrintBoard()
   {
     for(int col=0; col<GameBoard::COL_NUM; col++)
     {
-      string pieceStr = to_string(board_nums[row][col]);
+      string pieceStr = " ";
+
+      if(board_nums[row][col]!=0)
+      {
+        pieceStr = to_string(board_nums[row][col]);
+      }
+
       int pieceLen = pieceStr.length();
       int diff = cellWid - pieceLen;
       if(diff>=0)
@@ -69,8 +75,8 @@ void GameBoard::PrintBoard()
     WriteOnBoardLog("\n",false);
   }
 
-  display->setScreenWithStr("\n ");
-  display->setScreenWithStr("\n ");
+  // TO DO REMOVE 3
+  display->setCursorPos(display->getCursorPosY()+3,display->getCursorPosX());
 }
 
 void GameBoard::setPiece(int val, int row, int col)

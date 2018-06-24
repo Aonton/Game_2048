@@ -25,18 +25,14 @@ Game2048::Game2048(Log& log, Display& display, FileController& fileCtr):
   keypad(stdscr, TRUE);
 }
 
-void Game2048::End()
-{
-  endwin();
-}
-
-void Game2048::DisplayGame()
+int Game2048::DisplayGame()
 {
   display->setCursorPos(0,0);
   DisplayTopMenu();
   cout<< board;
   DisplayBottomMenu();
-  display->print();
+  int key = display->print();
+  return key;
 }
 
 void Game2048::DisplayTopMenu()
@@ -56,7 +52,6 @@ void Game2048::DisplayBottomMenu()
 
   // TO DO: REMOVE MAX TO JUST LEN
   const int fieldNum = 3;
-  display->setScreenWithStr("\n ");
   int bottomPanelPosRow = display->getCursorPosY();
   int padBottomPanel = display->setScreenWithStrCenteredH(fileCtr->getBottomPanelDisplay());
   Position scorePos;
@@ -79,11 +74,12 @@ void Game2048::DisplayBottomMenu()
 
 }
 
-void Game2048::SetUpGame()
+int Game2048::SetUpGame()
 {
   piece.setBoard();
   piece.setBoard();
-  DisplayGame();
+  int key = DisplayGame();
+  return key;
 }
 
 void Game2048::Start()
@@ -94,8 +90,8 @@ void Game2048::Start()
   int key = -1;
   int row,col;
 
-  SetUpGame();
-  key = input.Input();
+  key = SetUpGame();
+  key = input.Input(key);
 
   while(key!=(int)'e')
   {
@@ -116,7 +112,7 @@ void Game2048::Start()
                 {
                   piece.setBoard();
                   // TO DO ADD COLOR
-                  DisplayGame();
+                  key = DisplayGame();
 
                   if(objective2048)
                   {
@@ -127,17 +123,25 @@ void Game2048::Start()
                     contGame = collDetec.testShift();
                   }
                 }
+                else
+                {
+                  key = display->DisplayGetch();
+                }
+              }
+              else
+              {
+                key = display->DisplayGetch();
               }
             }
             else
             {
-              Redo();
+              key = Redo();
               contGame = true;
             }
           }
           else
           {
-            Reset();
+            key = Reset();
           }
         }
         else
@@ -147,7 +151,7 @@ void Game2048::Start()
 
         if(contGame)
         {
-            key = input.Input();
+            key = input.Input(key);
         }
       }
 
@@ -171,7 +175,7 @@ void Game2048::Start()
       }
       else
       {
-        key = input.Input();
+        key = input.Input(key);
       }
 
       if((key==(int)'r') || (key==(int)'s'))
@@ -180,10 +184,6 @@ void Game2048::Start()
         showLostMessage = true;
       }
   }
-
-  /*getmaxyx(stdscr,row,col);
-  mvprintw(row/2,(col-strlen(getGameOverMessage().c_str()))/2,"%s",getGameOverMessage().c_str());
-  refresh();*/
 }
 
 // TO DO: Needs multi-threading - might need timer class
@@ -200,13 +200,13 @@ void Game2048::Win(bool& contGame, bool& objective2048, int& key)
   WriteOnGameLog("User Won!\n");
   // add timer for press?
   printw("Press (c) to continue\n");
-  key = input.Input();
+  key = input.Input(key);
   if(key==(int)'c')
   {
     WriteOnGameLog("Continuing game after 2048 goal\n");
     contGame = true;
     objective2048 = false;
-    DisplayGame();
+    key = DisplayGame();
   }
   else
   {
@@ -215,22 +215,24 @@ void Game2048::Win(bool& contGame, bool& objective2048, int& key)
   }
 }
 
-void Game2048::Redo()
+int Game2048::Redo()
 {
   collDetec.UndoCollision();
-  DisplayGame();
+  int key = DisplayGame();
   showLostMessage = true;
   WriteOnGameLog("Redoing Board ...\n");
+  return key;
 }
 
-void Game2048::Reset()
+int Game2048::Reset()
 {
   board.boardReset();
   score.scoreReset();
   piece.setBoard();
   piece.setBoard();
-  DisplayGame();
+  int key = DisplayGame();
   WriteOnGameLog("Resetting Board ...\n");
+  return key;
 }
 
 void Game2048::WriteOnGameLog(string text)

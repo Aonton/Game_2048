@@ -13,11 +13,11 @@ UserInput::UserInput(Log& log)
   UserInput::logger = &log;
 }
 
-int UserInput::Input()
+int UserInput::Input(int key)
 {
-  int key = 0;
+  //int key = 0;
 
-  key = getch();
+  //key = getch();
   string statement = "User entered: ";
 
   switch(key)

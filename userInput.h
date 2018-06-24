@@ -18,7 +18,7 @@ class UserInput
 {
   public:
     UserInput(Log&);
-    int Input();
+    int Input(int);
 
   private:
     //int getch(void);

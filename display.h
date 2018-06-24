@@ -25,6 +25,7 @@ class Display
     int setScreenWithStrCenteredH(string);
     int setScreenWithStrCenteredHAtPos(int,string);
     int print();
+    int DisplayGetch();
     void setCursorPos(int,int);
     void EndDisplay();
     void SkipLine(int);
@@ -34,6 +35,7 @@ class Display
     void clearScreenPartial(int,int,int,int);
     void clearScreenPartialCenter(int,int,int);
     void clearScreen();
+    void clearBorder();
 
     int getCursorPosX();
     int getCursorPosY();

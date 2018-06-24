@@ -20,15 +20,17 @@ class Menu
 {
   public:
     Menu(Log&, Display&, MenuController&, FileController&);
-    void initMenu();
-    void endMenu();
     int DisplayMenu();
+    void start();
     void MenuLoop();
+    void endMenu();
   private:
 
     void WriteOnMenu(string);
     void setOptHighlight();
     void unsetOptHighlight();
+    void initMenu();
+
     Log* logger;
     Display* display;
     MenuController* menuController;
