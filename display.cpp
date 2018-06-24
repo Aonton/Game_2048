@@ -10,7 +10,7 @@
 #include "display.h"
 using namespace std;
 
-Display::Display(Log& log)
+Display::Display(Log& log, bool color)
 {
   Display::len = 46;
   Display::wid = 150;
@@ -20,7 +20,22 @@ Display::Display(Log& log)
   Display::min_wid = 150;
   initscr();
   cbreak();
-  start_color();
+  setUserColorPrefer(color);
+  /* COLOR_BLACK   0
+   * COLOR_RED     1
+   * COLOR_GREEN   2
+   * COLOR_YELLOW  3
+   * COLOR_BLUE    4
+   * COLOR_MAGENTA 5
+   * COLOR_CYAN    6
+   * COLOR_WHITE   7
+   */
+  if(Display::enable_color)
+  {
+    start_color();
+    init_pair(Green,COLOR_GREEN,COLOR_BLACK);
+    attron(COLOR_PAIR(1));
+  }
   noecho();
   /*scrollok(stdscr,true);
   idlok(stdscr,true);*/
@@ -40,6 +55,25 @@ Display::Display(Log& log)
 Display::~Display()
 {
   endwin();
+}
+
+void Display::setUserColorPrefer(bool color)
+{
+  if(can_change_color())
+  {
+    if(has_colors())
+    {
+      Display::enable_color = color;
+    }
+    else
+    {
+      Display::enable_color = false;
+    }
+  }
+  else
+  {
+    Display::enable_color = false;
+  }
 }
 
 void Display::highlightPiece(int x, int y)
@@ -96,12 +130,20 @@ void Display::initBoard()
 
 int Display::print()
 {
-  for(int i=0; i<len; i++)
+  //sortColorBlocks();
+  for(int j=0; j<wid; j++)
   {
-    for(int j=0; j<wid; j++)
+    for(int i=0; i<len; i++)
     {
-      //addch(display_board[j][i]);
-      //printw(&display_board[j][i]);
+      /*for(int k=0; k<colorSegments.length(); i++)
+      {
+        // Assumes colorSegments will never overlap
+        if(colorSegments[k].pos.row == j &&
+           colorSegments[k].pos.col == i)
+        {
+          for(int l=)
+        }
+      }*/
 
       if(display_board_highlight[j][i])
       {
@@ -110,10 +152,8 @@ int Display::print()
       move(i,j);
       addch(display_board[j][i]);
       attroff(A_STANDOUT);
-      //logger->writeToLog(Dis,string(1,display_board[j][i]),false);
     }
   }
-
   return(DisplayGetch());
 }
 
@@ -299,4 +339,17 @@ void Display::clearScreen()
 void Display::clearBorder()
 {
   setBorder(' ');
+}
+
+void Display::addColorSegment(ColorBlock colorBlock)
+{
+  colorSegments.push_back(colorBlock);
+}
+
+void Display::sortColorBlocks()
+{
+  if(!colorSegments.empty())
+  {
+    sort(colorSegments.begin(), colorSegments.end());
+  }
 }

@@ -1,2 +1,2 @@
 Menu.o: Menu.cpp Menu.h logger.h LogModule.h display.h position.h \
-  menuController.h menuOptions.h fileController.h
+  colorBlock.h colors.h menuController.h menuOptions.h fileController.h

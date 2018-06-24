@@ -10,14 +10,16 @@
 #include <iostream>
 #include <ncurses.h>
 #include <vector>
+//#include <list>
 #include "logger.h"
 #include "position.h"
+#include "colorBlock.h"
 using namespace std;
 
 class Display
 {
   public:
-    Display(Log&);
+    Display(Log&,bool);
     ~Display();
     void setScreenPiece(int,int,char);
     void setScreenWithStrAtPos(int, int, string);
@@ -36,6 +38,8 @@ class Display
     void clearScreenPartialCenter(int,int,int);
     void clearScreen();
     void clearBorder();
+    void setUserColorPrefer(bool);
+    void addColorSegment(ColorBlock);
 
     int getCursorPosX();
     int getCursorPosY();
@@ -46,6 +50,7 @@ class Display
     void initBoard();
     void refreshScrDim();
     void WriteOnDisplay(string);
+    void sortColorBlocks();
 
     int len;
     int wid;
@@ -53,9 +58,11 @@ class Display
     int max_wid;
     int min_len;
     int min_wid;
+    bool enable_color;
     vector< vector<char> > display_board;
     vector< vector<bool> > display_board_highlight;
     Position cursor_pos;
+    vector<ColorBlock> colorSegments;
 
     Log* logger;
 };

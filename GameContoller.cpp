@@ -10,7 +10,7 @@
 #include "GameController.h"
 using namespace std;
 
-GameController::GameController(Log& log):display(log),
+GameController::GameController(Log& log):display(log,true),
                                          menuCtr(log),
                                          fileCtr(log),
                                          menu(log,

@@ -38,7 +38,7 @@ int Game2048::DisplayGame()
 void Game2048::DisplayTopMenu()
 {
   // TO DO: REMOVE 5
-  display->setScreenWithStrCenteredHAtPos(5,
+  display->setScreenWithStrCenteredHAtPos(1,
     fileCtr->getTopPanelDisplay());
 }
 
